@@ -1,3 +1,3 @@
 print("hello")
 print("do your best")
-None
+print('pass')
