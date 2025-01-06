@@ -1,9 +1,9 @@
 print("hello")
 print("lol")
-p = [i for i in range(1, 27)]
-lo = [i for i in p if i % 2 == 1]
-print(lo)
+print('lo')
 print('print all you want')
 print("bye")
 print("i know")
 print("nothing")
+for i in range (1,10):
+    print(i)
