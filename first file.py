@@ -5,3 +5,4 @@ lo = [i for i in p if i % 2 == 1]
 print(lo)
 print('varcolack')
 print("bye")
+print("i know")
