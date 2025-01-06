@@ -5,4 +5,4 @@ lo = [i for i in p if i % 2 == 1]
 print(lo)
 print('lplpdffd')
 print("bye")
-print("i know")
+print("i now")
