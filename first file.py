@@ -4,4 +4,5 @@ def i (p):
 print('lpop')
 print('mod')
 print('lplpdffd')
+print("bye")
 print("i now")
