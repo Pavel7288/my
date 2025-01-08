@@ -10,3 +10,4 @@ def po(lo):
 while go < 3:
     print('35')
     go += 1
+    
