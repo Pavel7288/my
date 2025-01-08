@@ -3,5 +3,10 @@ if i == 0:
     print('ок')
 
 print("hello")
-print("do your best")
-print('pass')
+def i (p):
+    print(p)
+print('lpop')
+print('mod')
+print('lplpdffd')
+print("bye")
+print("i now")
