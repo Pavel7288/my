@@ -1,9 +1,11 @@
 print('lplpdffd')
 print("bye")
-print("i now")
+None
+print('kol')
 l = [1, 2, 3, 54, 56, 6, 7, 4]
 j = [i for i in l if i > 4]
 print(j)
+
 go = 30
 
 
@@ -17,3 +19,5 @@ while go < 3:
     print('35')
     go += 1
 
+    
+pass
