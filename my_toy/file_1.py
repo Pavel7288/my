@@ -79,18 +79,17 @@ class AllOrders:
             if item.name_client.lower() == name.lower():
                 return item
 
-    async def changed_status_of_order(self, name, delay=5):
-        if name in self.current_all_orders:
-            if not name.ready:
-                name.ready = True
-                print(f'{name} is ready')
-                await asyncio.sleep(delay)
-                self.current_all_orders.remove(name)
-                print(f'Order {name}- Was removed')
-                await insert_order(customer_name=name.name_client, price=name.full_cost_every_order(),
-                                   products=name.add_to_database())
-            else:
-                print('That name was changed status')
+    async def changed_status_of_order(self, name, delay=20):
+        if not name.ready:
+            name.ready = True
+            print(f'{name} is ready')
+            await asyncio.sleep(delay)
+            self.current_all_orders.remove(name)
+            print(f'Order {name}- Was removed')
+            await insert_order(customer_name=name.name_client, price=name.full_cost_every_order(),
+                               products=name.add_to_database())
+        else:
+            print('That name was changed status')
 
     def empty_list(self):
         if not self.current_all_orders:
@@ -102,7 +101,7 @@ class AllOrders:
 
 def get_next_order_counter():
     current_date = datetime.now().strftime('%Y-%m-%d')
-    with sqlite3.connect('/home/pavel/Documents/my_project') as conn:
+    with sqlite3.connect('/home/pavel/Documents/my_project.db') as conn:
         cursor = conn.cursor()
         cursor.execute('SELECT COUNT(*) FROM finished_orders WHERE DATE(datetime) = ?', (current_date,))
         count = cursor.fetchone()[0]
@@ -114,7 +113,7 @@ async def insert_order(customer_name, price, products, order_counter=False, curr
         order_counter = get_next_order_counter()
         current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     try:
-        with sqlite3.connect("/home/pavel/Documents/my_project") as conn:
+        with sqlite3.connect("/home/pavel/Documents/my_project.db") as conn:
             cursor = conn.cursor()
             cursor.execute("""
                     INSERT INTO finished_orders (datetime, order_counter, name_client, price, products)  
@@ -188,7 +187,7 @@ async def main():
                     while True:
                         try:
                             quantity_of_product = int(await asyncio.to_thread(input, 'enter quantity of product: '))
-                            if isinstance(quantity_of_product, int):
+                            if isinstance(quantity_of_product, int) and quantity_of_product > 0:
                                 print(f'quantity of product set {quantity_of_product}')
                                 break
                         except ValueError:
@@ -210,7 +209,7 @@ async def main():
                 if item_that_remove:
                     break
                 else:
-                    print("list of name doesn't have such name")
+                    print("Order with name {name_that_remove} not found.")
             asyncio.create_task(all_orders.changed_status_of_order(item_that_remove))
             await asyncio.sleep(0)
             if not all_orders.empty_list():
