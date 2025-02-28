@@ -170,52 +170,60 @@ all_orders.add(Natasha)
 print(all_orders)
 
 
+async def add_product():
+    name_visitor = await asyncio.to_thread(input, 'Enter client: ')
+    print(f'Name of client is {name_visitor}')
+    name_client_1 = Orders(name_client=name_visitor)
+    while True:
+        name_of_order = str(input('Enter name of order: '))
+        if name_of_order == 'end':
+            break
+        elif menu.get_product(name_of_order):
+            ordered_dish = menu.get_product(name_of_order)
+            while True:
+                try:
+                    quantity_of_product = int(await asyncio.to_thread(input, 'enter quantity of product: '))
+                    if isinstance(quantity_of_product, int) and quantity_of_product > 0:
+                        print(f'quantity of product set {quantity_of_product}')
+                        break
+                except ValueError:
+                    quantity_of_product = 1
+                    print('quantity of product set 1')
+                    break
+            name_client_1.create_order(ordered_dish, quantity_of_product)
+            print(name_client_1)
+        else:
+            print("That order doesn't exist")
+    all_orders.add(name_client_1)
+    print(f'Order - {name_client_1} Added')
+    print(all_orders)
+
+
+async def ready_order():
+    while True:
+        print(all_orders)
+        name_that_remove = await asyncio.to_thread(input, 'Enter name that need remove: ')
+        item_that_remove = all_orders.get_item_all_orders(name_that_remove)
+        if item_that_remove:
+            break
+        else:
+            print("Order with name {name_that_remove} not found.")
+    asyncio.create_task(all_orders.changed_status_of_order(item_that_remove))
+    await asyncio.sleep(0)
+    if not all_orders.empty_list():
+        print(all_orders)
+    else:
+        print('List of order is empty')
+
+
 async def main():
     asyncio.create_task(retry_pending_orders())
     while True:
         command = await asyncio.to_thread(input, 'What you wish: ')
         if command == 'add order':
-            name_visitor = await asyncio.to_thread(input, 'Enter client: ')
-            print(f'Name of client is {name_visitor}')
-            name_client_1 = Orders(name_client=name_visitor)
-            while True:
-                name_of_order = str(input('Enter name of order: '))
-                if name_of_order == 'end':
-                    break
-                elif menu.get_product(name_of_order):
-                    ordered_dish = menu.get_product(name_of_order)
-                    while True:
-                        try:
-                            quantity_of_product = int(await asyncio.to_thread(input, 'enter quantity of product: '))
-                            if isinstance(quantity_of_product, int) and quantity_of_product > 0:
-                                print(f'quantity of product set {quantity_of_product}')
-                                break
-                        except ValueError:
-                            quantity_of_product = 1
-                            print('quantity of product set 1')
-                            break
-                    name_client_1.create_order(ordered_dish, quantity_of_product)
-                    print(name_client_1)
-                else:
-                    print("That order doesn't exist")
-            all_orders.add(name_client_1)
-            print(f'Order - {name_client_1} Added')
-            print(all_orders)
+            await add_product()
         elif command == 'ready':
-            while True:
-                print(all_orders)
-                name_that_remove = await asyncio.to_thread(input, 'Enter name that need remove: ')
-                item_that_remove = all_orders.get_item_all_orders(name_that_remove)
-                if item_that_remove:
-                    break
-                else:
-                    print("Order with name {name_that_remove} not found.")
-            asyncio.create_task(all_orders.changed_status_of_order(item_that_remove))
-            await asyncio.sleep(0)
-            if not all_orders.empty_list():
-                print(all_orders)
-            else:
-                print('List of order is empty')
+            await ready_order()
 
 
 if __name__ == '__main__':
