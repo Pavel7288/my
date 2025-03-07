@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прием заказов</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: "Arial", sans-serif
+            background-color: #1e1e1e;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 50%;
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffcc00;
+            margin-bottom: 20px;
+        }
+
+        select, input {
+            width: 90%;
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 90%;
+            padding: 12px;
+            background: #ffcc00;
+            color: #222;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #ffaa00;
+        }
+
+        .order-list {
+            margin-top: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #333;
+            padding: 12px;
+            margin: 5px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .order-item span {
+            font-size: 16px;
+        }
+
+        .delete-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: #cc0000;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fa-solid fa-utensils"></i> Прием заказов</h1>
+        <input type="text" id="customerName" placeholder="Имя клиента">
+        <select id="menuItems" onchange="updatePrice()">
+            <option value="Пицца Маргарита" data-price="500">Пицца Маргарита - 500₽</option>
+            <option value="Бургер Чизбургер" data-price="300">Бургер Чизбургер - 300₽</option>
+            <option value="Кока-кола" data-price="100">Кока-кола - 100₽</option>
+        </select>
+        <input type="number" id="quantity" value="1" min="1" onchange="updatePrice()">
+        <input type="text" id="orderAmount" placeholder="Сумма заказа" readonly>
+        <button class="btn" onclick="addOrder()">Добавить заказ</button>
+        <div class="order-list" id="orderList"></div>
+        <button class="btn" style="background: #44cc44; margin-top: 20px;" onclick="confirmOrders()">
+            <i class="fa-solid fa-check"></i> Подтвердить заказы
+        </button>
+    </div>
+
+    <script>
+        let orders = [];
+
+        function updatePrice() {
+            const menu = document.getElementById("menuItems");
+            const price = menu.options[menu.selectedIndex].getAttribute("data-price");
+            const quantity = document.getElementById("quantity").value;
+            document.getElementById("orderAmount").value = price * quantity + "₽";
+        }
+
+        function addOrder() {
+            const name = document.getElementById("customerName").value;
+            const menu = document.getElementById("menuItems");
+            const details = menu.value;
+            const quantity = document.getElementById("quantity").value;
+            const price = menu.options[menu.selectedIndex].getAttribute("data-price");
+            const amount = price * quantity;
+
+            if (name === "" || quantity === "") {
+                alert("Заполните все поля!");
+                return;
+            }
+
+            const order = { name, details, quantity, amount };
+            orders.push(order);
+            updateOrderList();
+        }
+
+        function updateOrderList() {
+            const list = document.getElementById("orderList");
+            list.innerHTML = "";
+
+            orders.forEach((order, index) => {
+                const div = document.createElement("div");
+                div.classList.add("order-item");
+                div.innerHTML = `
+                    <span><strong>${order.name}</strong>: ${order.details} x${order.quantity} — <strong>${order.amount}₽</strong></span>
+                    <button class="delete-btn" onclick="removeOrder(${index})">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function removeOrder(index) {
+            orders.splice(index, 1);
+            updateOrderList();
+        }
+
+        function confirmOrders() {
+            if (orders.length === 0) {
+                alert("Нет заказов для отправки!");
+                return;
+            }
+            console.log("Заказы отправлены:", orders);
+            alert("Заказы отправлены!");
+            orders = [];
+            updateOrderList();
+        }
+    </script>
+</body>
+</html>
