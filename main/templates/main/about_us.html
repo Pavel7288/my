@@ -1,0 +1,30 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'main/css/about_us.css' %}">
+{% endblock %}
+{% block about %}
+<body>
+
+<div class="animated-stripes">
+    <div class="stripe"></div>
+    <div class="stripe"></div>
+    <div class="stripe"></div>
+    <div class="stripe"></div>
+    <div class="stripe"></div>
+</div>
+<div class="left">
+    <a href="{% url 'main:main_page' %}" class="btn">Назад</a>
+</div>
+<div class="about-container">
+    <h1 id="about-text"
+        >{{ about_us }}</h1>
+    <div id="text-container">
+        {% for para in text %}
+        <p class="fade-text">{{ para }}</p>
+        {% endfor %}
+    </div>
+</div>
+<script src="{% static 'main/js/script.js' %}"></script>
+</body>
+{% endblock %}

@@ -1,0 +1,153 @@
+/* Основной стиль страницы каталога */
+body {
+    background-color: #161616;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+/* Заголовок */
+header h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-top: 50px;
+    color: #00fff7; /* Неоновый цвет для текста */
+}
+
+.filter-btn {
+    padding: 20px 30px;
+    left: 35px;
+    border: none;
+    outline: none;
+    color: #FFF;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1; /* Исправляет позицию текста */
+    text-decoration: none
+}
+
+
+/* Эффекты кнопки */
+.filter-btn::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+    top: 0;
+    left: 0;
+    border-radius: 25px;
+    z-index: -1;
+}
+
+.filter-btn::before {
+    content: "";
+    background: linear-gradient(
+        45deg,
+        #FF0000, #FF7300, #FFFB00, #48FF00,
+        #00FFD5, #002BFF, #FF00C8, #FF0000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 500%;
+    z-index: -1;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    filter: blur(4px);
+    animation: glowing 20s linear infinite;
+    transition: opacity .3s ease-in-out;
+    border-radius: 30px;
+    opacity: 0;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+.filter-btn:hover::before {
+    opacity: 1;
+}
+
+.filter-btn:active::after {
+    background: transparent;
+}
+
+/* Основная секция каталога */
+.catalog {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 30px;
+    margin-top: 20px;
+}
+
+/* Карточка товара */
+.product-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid #00fff7;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.product-card h2 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.product-card .price {
+    font-size: 1.2rem;
+    color: #ff007f;
+}
+
+.product-card:hover {
+    transform: scale(1.05); /* Увеличение карточки при наведении */
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.7); /* Свечение */
+}
+
+.view-details-btn {
+    background: linear-gradient(45deg, #FF0000, #FF7300, #FFFB00, #48FF00);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 40px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.view-details-btn:hover {
+    transform: scale(1.1);
+    background-color: #ff0080;
+}
+
+/* Анимации */
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+
+
+
+
+

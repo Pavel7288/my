@@ -1,0 +1,77 @@
+/* Эффект текста */
+.text-effect {
+    overflow: hidden; /* Обрезаем все, что выходит за пределы */
+    position: relative;
+    filter: contrast(110%) brightness(190%); /* Повышаем контраст и яркость */
+}
+
+/* Основные стили для неонового текста */
+.neon {
+    position: relative;
+    background: black;
+    color: transparent; /* Делаем текст прозрачным, так как он будет подсвечиваться псевдоэлементами */
+}
+
+/* Псевдоэлементы создают неоновое свечение */
+.neon::before, .neon::after {
+    content: attr(data-text); /* Берем текст из атрибута data-text */
+    color: white;
+    filter: blur(0.02cm); /* Размытие для эффекта свечения */
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Исключаем из взаимодействия с пользователем */
+}
+
+/* Эффект разницы цветов для дополнительного неонового свечения */
+.neon::after {
+    mix-blend-mode: difference; /* Меняем режим смешивания для создания эффекта */
+}
+
+/* Градиент и световые эффекты */
+.gradient, .spotlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+}
+
+/* Градиентный слой, накладывающий цвет */
+.gradient {
+    background: linear-gradient(45deg, red, blue); /* Красно-синий градиент */
+    mix-blend-mode: multiply; /* Режим наложения, придающий эффект свечения */
+}
+
+/* Эффект движущегося света */
+.spotlight {
+    animation: light 5s linear infinite; /* Анимация движения света */
+    background: radial-gradient(circle, white, transparent 25%)
+    0 0 / 25% 25%, radial-gradient(circle, white, black 25%);
+    50% 50% / 12.5% 12.5%;
+    top: -100%;
+    left: -100%;
+    mix-blend-mode: color-dodge; /* Эффект яркого света */
+}
+
+/* Анимация движения света */
+@keyframes light {
+    100% {
+        transform: translate3d(50%, 50%, 0); /* Смещение в правый нижний угол */
+    }
+}
+
+/* Размер, стиль и выравнивание текста */
+.neon {
+    font: 700 50px sans-serif; /* Жирный текст, размер 220px */
+    text-transform: uppercase; /* Все буквы заглавные */
+    text-align: center; /* Центрирование текста */
+    margin: 0;
+}
+
+/* Стиль при фокусе на элементе */
+.neon:focus {
+    outline: none; /* Убираем стандартный контур */
+    border: 1px dotted white; /* Добавляем пунктирную границу */
+}
