@@ -5,7 +5,6 @@
 {% endblock %}
 {% block about %}
 <body>
-
 <div class="animated-stripes">
     <div class="stripe"></div>
     <div class="stripe"></div>
@@ -17,8 +16,7 @@
     <a href="{% url 'main:main_page' %}" class="btn">Назад</a>
 </div>
 <div class="about-container">
-    <h1 id="about-text"
-        >{{ about_us }}</h1>
+    <h1 id="about-text">{{ about_us }}</h1>
     <div id="text-container">
         {% for para in text %}
         <p class="fade-text">{{ para }}</p>

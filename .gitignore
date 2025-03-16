@@ -3,3 +3,6 @@ __pychache__/
 /manage.py
 media/
 .idea
+.webp
+
+/static/main/image/

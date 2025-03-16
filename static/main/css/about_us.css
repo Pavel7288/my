@@ -133,3 +133,6 @@ body {
 .btn:active::after {
     background: transparent;
 }
+.fade-text {
+    visibility: hidden;
+}

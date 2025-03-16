@@ -1,6 +1,6 @@
 {% extends "main/base.html" %}
 {% load static %}
-
+{% load goods_tags %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'main/css/catalog.css' %}">
 {% endblock %}
@@ -10,22 +10,34 @@
 <header>
     <h1>Каталог товаров</h1>
 </header>
+<div class="left">
+    <a href="{% url 'main:main_page' %}" class="filter-btn">Назад</a>
+</div>
+<!-- Выпадающий фильтр по категориям -->
+<div class="category-filter">
+    <select id="categorySelect" class="category-dropdown">
+        <option value="all">Все категории</option>
+        {% tag_categories as categories %}
+        {% for category in categories %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+
 <main class="catalog">
-    <div class="product-card">
-        <img src="{% static 'main/image/product1.png' %}" alt="Product 1">
-        <h2>Товар 1</h2>
-        <p class="price">Цена: 5000 ₽</p>
-        <button class="filter-btn">Заказать</button>
+    {% for product in products %}
+    <div class="product-card" data-category="{{ product.category.id }}">
+        <img src="{{ product.image.url }}">
+        <h2>{{ product.name }}</h2>
+        <h2>id - {{ product.display_id }}</h2>
+        <p class="price">{{ product.price }} $</p>
+        <a class="filter-btn" href="{% url 'catalog:product' product.slug %}">Подробнее</a>
     </div>
-
-    <div class="product-card">
-        <img src="{% static 'main/image/product2.png' %}" alt="Product 2">
-        <h2>Товар 2</h2>
-        <p class="price">Цена: 7500 ₽</p>
-        <button class="filter-btn">Заказать</button>
-    </div>
-
-    <!-- Повторите для других товаров -->
+    {% endfor %}
 </main>
+
+<script src="{% static 'main/js/catalog.js' %}"></script>
+<img src="{% static 'main/image/back.png' %}" class="background-image">
 </body>
 {% endblock %}
+

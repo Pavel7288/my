@@ -9,7 +9,6 @@ html, body {
     position: relative;
 }
 
-
 /*  Размещение кнопок */
 .top-right {
     position: absolute;
@@ -134,7 +133,15 @@ footer p {
     margin: 0 15px;
     white-space: nowrap;
 }
-
+footer a {
+    color:white;
+    text-decoration: none;
+    margin: 0 15px;
+    white-space: nowrap;
+}
+footer a:hover {
+    color: #ffcc00;
+}
 /*корзина*/
 .image {
     background: none;

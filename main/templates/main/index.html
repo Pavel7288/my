@@ -4,24 +4,26 @@
 <link rel="stylesheet" href="{% static 'main/css/main_page.css' %}">
 {% endblock %}
 {% block about %}
+
 <body>
+
 <div class="top-right">
     <a href="{% url 'main:button' %}" class="btn">dfofdp</a>
 </div>
 <div class="left-column">
     <a href="{% url 'goods:catalog' %}" class="btn">{{ button_1 }}</a>
-    <a href="{% url 'main:about_us' %}" class="btn">{{ button_2 }}</a>
 </div>
 </body>
 <a href="/your-target-link" class="image">
     <img src="{% static 'main/image/basket.png' %}" class="image" alt="Корзина">
 </a>
-<img src="{% static 'main/image/back.png' %}" class="background-image">
+<img src="{% static 'main/image/city.png' %}" class="background-image">
 
 {% endblock %}
 {% block footer %}
 <footer>
-    <p>© 2025 NeuroForge. Все права защищены.</p>
+    <p>Copyright © 2043-2065 NeuroForge. Все права защищены.</p>
+    <a href="{% url 'main:about_us' %}">{{ button_2 }}</a>
     <p>Связаться с нами: support@neuroforge.com</p>
 </footer>
 {% endblock %}

@@ -1,38 +1,27 @@
 document.addEventListener("DOMContentLoaded", function () {
-    function typeText(element, text, speed = 50, callback = null) {
-        let index = 0;
-        element.innerHTML = ""; // Очищаем текст перед печатью
-        element.style.visibility = "visible"; // Показываем элемент
+    function fadeInText(element, speed = 15) {
+        const text = element.textContent;
+        element.textContent = ""; // Очищаем оригинальный текст
 
-        function type() {
-            if (index < text.length) {
-                element.innerHTML += text[index];
-                index++;
-                setTimeout(type, speed);
-            } else if (callback) {
-                setTimeout(callback, 300); // Пауза перед следующим элементом
-            }
-        }
+        text.split("").forEach((char, index) => {
+            const span = document.createElement("span");
+            span.textContent = char;
+            span.style.opacity = "0";
+            element.appendChild(span);
 
-        type();
+            setTimeout(() => {
+                span.style.opacity = "1";
+            }, index * speed);
+        });
     }
 
-    const elements = document.querySelectorAll(".fade-text");
+    // Обрабатываем все элементы с классом fade-text
+    document.querySelectorAll(".fade-text").forEach((element, idx) => {
+        element.style.visibility = "hidden"; // Делаем текст невидимым, но он остается на месте
 
-    let texts = []; // Сохраняем оригинальные тексты
-    elements.forEach(el => {
-        texts.push(el.innerText.trim()); // Сохраняем текст перед скрытием
-        el.innerHTML = ""; // Очищаем контент
-        el.style.visibility = "hidden"; // Скрываем перед началом
+        setTimeout(() => {
+            element.style.visibility = "visible"; // Показываем элемент
+            fadeInText(element);
+        }, idx * 500); // Задержка между строками
     });
-
-    function processElements(index = 0) {
-        if (index < elements.length) {
-            const el = elements[index];
-            el.style.visibility = "visible"; // Показываем перед печатью
-            typeText(el, texts[index], 20, () => processElements(index + 1));
-        }
-    }
-
-    processElements();
 });

@@ -1,0 +1,74 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    overflow: hidden; /* Убирает скролл, если фон больше экрана */
+}
+
+.background-image {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+}
+
+.product-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.product-info {
+    display: flex;
+    gap: 30px;
+    max-width: 1300px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    z-index: 1; /* Контент поверх фона */
+}
+
+.product-info img {
+    width: 600px;
+    height: 600px;
+    border-radius: 10px;
+}
+
+.product-details {
+    font-size: 18px;
+}
+
+.product-details h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 22px;
+    color: #ff007f;
+}
+
+.product-description {
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
+.order-btn {
+    background: linear-gradient(45deg, #FF0000, #FF7300, #FFFB00, #48FF00);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 40px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.order-btn:hover {
+    transform: scale(1.1);
+}
