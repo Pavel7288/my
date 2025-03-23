@@ -136,3 +136,20 @@ body {
 .fade-text {
     visibility: hidden;
 }
+
+@font-face {
+    font-family: 'CyberFont';
+    src: url('/static/main/fonts/cyber.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+.description {
+    font-family: 'CyberFont', sans-serif; /* Киберпанковый шрифт */
+    font-size: 22px; /* Размер текста */
+    font-weight: 700; /* Толщина шрифта */
+    color: #0ff; /* Неоновый фиолетовый цвет */
+    text-shadow: 0 0 5px #d400ff, 0 0 10px #a000ff, 0 0 15px #7000ff; /* Градиентное свечение */
+    letter-spacing: 2.3px; /* Расстояние между буквами */
+    line-height: 1.8; /* Межстрочный интервал */
+}
+

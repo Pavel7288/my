@@ -8,19 +8,29 @@ body {
 /* Заголовок */
 header h1 {
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 2.7rem;
     margin-top: 50px;
     color: #00fff7; /* Неоновый цвет для текста */
 }
 
+@keyframes neonGlow {
+    0% { text-shadow: 0 0 5px #87CEEB, 0 0 10px #87CEEB, 0 0 15px #87CEEB; }
+    50% { text-shadow: 0 0 10px #87CEEB, 0 0 20px #87CEEB, 0 0 30px #87CEEB; }
+    100% { text-shadow: 0 0 5px #87CEEB, 0 0 10px #87CEEB, 0 0 15px #87CEEB; }
+}
+
 .left {
+    font-family: 'CyberFont', sans-serif;
     position: absolute;
     top: 50px;
     left: 100px;
     display: flex;
     gap: 50px;
+    text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700;
+    letter-spacing: 2.3px; /* Расстояние между буквами */
+    line-height: 1.8; /* Межстрочный интервал */
+    animation: neonGlow 1.5s infinite alternate; /* Запуск анимации */
 }
-
 
 .filter-btn {
     display: block;
@@ -29,7 +39,7 @@ header h1 {
     padding: 20px 40px;
     border: none;
     outline: none;
-    color: #FFF;
+    color: #32CD32;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
@@ -102,6 +112,12 @@ header h1 {
     padding: 30px;
     margin-top: 20px;
 }
+
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
 
 /* Карточка товара */
 .product-card {
@@ -187,3 +203,108 @@ header h1 {
     background-color: rgba(0, 0, 0, 1); /* Более тёмный фон при наведении */
     color: #fff; /* Белый текст */
 }
+
+
+
+@keyframes my {
+    0% { text-shadow: 0 0 5px #d400ff, 0 0 10px #d400ff, 0 0 15px #d400ff; }  /*мерцание*/
+    50% { text-shadow: 0 0 10px #a000ff, 0 0 20px #a000ff, 0 0 30px #a000ff; }
+    100% { text-shadow: 0 0 5px #7000ff, 0 0 10px #7000ff, 0 0 15px #7000ff; }
+}
+
+@font-face {
+    font-family: 'CyberFont';
+    src: url('/static/main/fonts/cyber.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+.description {
+    font-family: 'CyberFont', sans-serif; /* Киберпанковый шрифт */
+    font-size: 20px; /* Размер текста */
+    font-weight: 700; /* Толщина шрифта */
+    color: #00ff00;
+    text-shadow: 0 0 5px #d400ff, 0 0 10px #a000ff, 0 0 15px #7000ff; /* Градиентное свечение */
+    letter-spacing: 2.3px; /* Расстояние между буквами */
+    line-height: 1.8; /* Межстрочный интервал */
+    animation: my 1.5s infinite alternate;
+}
+
+.lo {
+    font-family: 'CyberFont', sans-serif; /* Киберпанковый шрифт */
+    color: #000000; /* Чёрный основной цвет */
+    text-shadow: 0 0 5px #00BFFF, 0 0 10px #00BFFF, 0 0 15px #00BFFF; /* Чёрное свечение */
+    letter-spacing: 2.3px; /* Расстояние между буквами */
+    line-height: 1.8; /* Межстрочный интервал */
+}
+
+
+.pagination {
+    text-align: center;
+    margin-top: 30px;
+}
+
+
+/* Анимация для градиентного фона */
+@keyframes neon-gradient {
+    0% { background-position: 0% 50%; }  /* Начальная позиция градиента */
+    50% { background-position: 100% 50%; } /* В середине - смещение градиента вправо */
+    100% { background-position: 0% 50%; }  /* Возвращение в исходное положение */
+}
+
+/* Основной стиль кнопки */
+.page-btn {
+    display: inline-block; /* Делаем кнопку блочным элементом, но с возможностью быть в строке */
+    padding: 12px 25px; /* Внутренние отступы (вертикальный, горизонтальный) */
+    margin: 0 8px; /* Отступы между кнопками */
+    color: #fff; /* Белый цвет текста */
+    font-size: 16px; /* Размер шрифта */
+    font-weight: bold; /* Делаем текст жирным */
+    text-transform: uppercase; /* Делаем все буквы заглавными */
+    text-decoration: none; /* Убираем подчеркивание у ссылок */
+    border-radius: 8px; /* Скругляем углы кнопки */
+
+    /* Создаем неоновую границу */
+    border: 2px solid rgba(255, 0, 255, 0.6); /* Полупрозрачная фиолетовая рамка */
+
+    /* Фон с градиентом */
+    background: linear-gradient(100deg,#FF1493,#FF1493, #700080,#700080, #4B0082,#4B0082, #8B0000,#8B0000, #000000,#000000, #9400D3,#9400D3);
+    background-size: 300% 300%; /* Увеличиваем размер градиента, чтобы он плавно переливался */
+
+    /* Применяем анимацию градиента */
+    animation: neon-gradient 7s ease infinite;
+
+    /* Эффект свечения кнопки */
+    box-shadow:
+        0 0 10px rgba(255, 0, 255, 0.5),  /* Мягкое свечение */
+        0 0 20px rgba(255, 0, 255, 0.3);  /* Дальнее свечение */
+
+    /* Плавные переходы при изменении свойств */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Эффект при наведении */
+.page-btn:hover {
+    transform: scale(1.1); /* Увеличиваем кнопку на 10% */
+
+    /* Усиливаем свечение */
+    box-shadow:
+        0 0 15px rgba(255, 0, 255, 0.8),
+        0 0 25px rgba(255, 0, 255, 0.6);
+}
+.page-btn.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.current-page {
+    display: inline-block; /* Чтобы не занимала всю ширину */
+    padding: 10px;
+    font-weight: bold;
+    color: #ff007f; /* Яркий розово-красный */
+    background: transparent; /* Убираем тёмный фон */
+    border: 2px solid #ff007f; /* Добавляем аккуратную границу */
+    border-radius: 5px; /* Закругляем углы */
+    font-size: 18px; /* Делаем текст чуть больше */
+}
+
+

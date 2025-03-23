@@ -1,0 +1,62 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load goods_tags %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'main/css/catalog.css' %}">
+{% endblock %}
+
+{% block about %}
+<body>
+<header>
+    <h1 class="lo">Каталог товаров</h1>
+</header>
+<div class="left">
+    <a href="{% url 'main:main_page' %}" class="filter-btn">Назад</a>
+</div>
+
+
+<!-- Выпадающий фильтр по категориям -->
+<div class="category-filter">
+    <select id="categorySelect" class="category-dropdown" onchange="location = this.value;">
+        {% tag_categories as categories %}
+        {% for category in categories %}
+        <option value="{% url 'catalog:index' category.slug %}" {% if category.slug == slug %} selected {% endif %}>
+            {{ category.name }}
+        </option>
+        {% endfor %}
+    </select>
+</div>
+
+<main class="catalog">
+    {% for product in products %}
+    <div class="product-card description" data-category="{{ product.category.id }}">
+        <img src="{{ product.image.url }}">
+        <h2>{{ product.name }}</h2>
+        <h2>id - {{ product.display_id }}</h2>
+        <p class="price">{{ product.price }} $</p>
+        <a class="filter-btn" href="{% url 'goods:product' product.slug %}?category={{ slug }}">Подробнее</a>
+    </div>
+    {% endfor %}
+</main>
+<img src="{% static 'main/image/back.png' %}" class="background-image">
+<script src="{% static 'main/js/catalog.js' %}"></script>
+
+
+<div class="pagination">
+    <a class="page-btn {% if not products.has_previous %}disabled{% endif %}" href="?page=1">Первая</a>
+    {% if products.has_previous %}
+    <a class="page-btn" href="?page={{ products.previous_page_number }}" >‹</a>
+    {% else %}<span class="page-btn disabled">‹</span>
+    {% endif %}
+    <span class="current-page">Страница {{ products.number }} из {{ products.paginator.num_pages }}</span>
+        {% if products.has_next %}
+    <a href="?page={{ products.next_page_number }}" class="page-btn">›</a>
+        {% else %}<span class="page-btn disabled">›</span>
+    {% endif %}
+    <a href="?page={{ products.paginator.num_pages }}"
+       class="page-btn {% if not products.has_next %}disabled{% endif %}">Последняя</a>
+</div>
+
+</body>
+{% endblock %}
+

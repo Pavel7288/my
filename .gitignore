@@ -4,5 +4,7 @@ __pychache__/
 media/
 .idea
 .webp
+.png
+/static/main/fonts/cyber.ttf
 
-/static/main/image/
+

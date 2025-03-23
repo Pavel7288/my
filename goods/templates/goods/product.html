@@ -1,0 +1,27 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'main/css/product.css' %}">
+{% endblock %}
+
+{% block about %}
+<body>
+<img src="{% static 'main/image/back.png' %}" class="background-image"><!-- Фон выше контента -->
+<main class="product-detail">
+    <div class="product-info">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        <div class="product-details description">
+            <h2>{{ product.name }}</h2>
+            <p class="product-id">ID: {{ product.display_id }}</p>
+            <p class="product-price">Цена: {{ product.price }} $</p>
+            <p class="product-description">{{ product.description }}</p>
+            <button class="order-btn">Заказать</button>
+        </div>
+    </div>
+</main>
+<div class="left">
+    <a href="{% url 'goods:index' category_slug=request.GET.category %}" class="order-btn">Назад</a>
+</div>
+</body>
+{% endblock %}

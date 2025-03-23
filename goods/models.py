@@ -18,7 +18,7 @@ class Products(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="Название")
     slug = models.SlugField(max_length=150, unique=True, null=True, blank=True, verbose_name='URL')
     description = models.TextField(verbose_name="Описание")
-    price = models.IntegerField(max_length=8, default=1, verbose_name='Цена')
+    price = models.IntegerField(default=1, verbose_name='Цена')
     image = models.ImageField(upload_to='goods_images', verbose_name='Изображение')
     quantity = models.PositiveIntegerField(default=0, verbose_name='Количество')
     category = models.ForeignKey(to=Categories, on_delete=models.CASCADE, verbose_name="Категория")
