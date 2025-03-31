@@ -6,7 +6,6 @@ def index(request):
         'title': 'BioHack Systems',
         'button_1': 'order',
         'button_2': 'Информация о нас',
-        'main_page': 'welcome',  # это может храниться в бд и наверное должно
     }
     return render(request, 'main/index.html', context)
 

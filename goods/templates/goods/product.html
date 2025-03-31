@@ -1,27 +1,34 @@
 {% extends "main/base.html" %}
+{% load goods_tags %}
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'main/css/product.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/product.css' %}">
 {% endblock %}
 
 {% block about %}
-<body>
-<img src="{% static 'main/image/back.png' %}" class="background-image"><!-- Фон выше контента -->
-<main class="product-detail">
-    <div class="product-info">
-        <img src="{{ product.image.url }}" alt="{{ product.name }}">
-        <div class="product-details description">
-            <h2>{{ product.name }}</h2>
-            <p class="product-id">ID: {{ product.display_id }}</p>
-            <p class="product-price">Цена: {{ product.price }} $</p>
-            <p class="product-description">{{ product.description }}</p>
-            <button class="order-btn">Заказать</button>
+    <body>
+    <img src="{% static 'main/image/back.png' %}" alt="{{ product.name }}" class="background-image">
+    <!-- Фон выше контента -->
+    <main class="product-detail">
+        <div class="product-info">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <div class="product-details description">
+                <h2>{{ product.name }}</h2>
+                <p class="product-id">ID: {{ product.display_id }}</p>
+                <p class="product-price">Цена: {{ product.price }} $</p>
+                <p class="product-description">{{ product.description }}</p>
+                <button class="order-btn">Заказать</button>
+            </div>
         </div>
+    </main>
+    <div class="left">
+        <a href="
+                {% if request.GET.q %}{% url 'goods:search' %}?{% change_param %}{% else %}{% url 'goods:index' request.GET.category %}?{% change_param %}{% endif %}"
+{#если делается запрос тогда передаётся параметр q то оно переопределяет начальный путь который был взят из change_param(url который сейчас на странице)#}
+{#и дальше передаёт запросом весь change_param а именно page, q и category и получается что нас перекидывает на страницу goods:search и подставляет эти#}
+{#параметры| 2 часть в другом случае также переопределяется как и в 1 части но ещё надо прокинуть category_slug, делается это запросом #}
+           class="order-btn">Назад</a>
     </div>
-</main>
-<div class="left">
-    <a href="{% url 'goods:index' category_slug=request.GET.category %}" class="order-btn">Назад</a>
-</div>
-</body>
+    </body>
 {% endblock %}

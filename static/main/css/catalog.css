@@ -14,9 +14,15 @@ header h1 {
 }
 
 @keyframes neonGlow {
-    0% { text-shadow: 0 0 5px #87CEEB, 0 0 10px #87CEEB, 0 0 15px #87CEEB; }
-    50% { text-shadow: 0 0 10px #87CEEB, 0 0 20px #87CEEB, 0 0 30px #87CEEB; }
-    100% { text-shadow: 0 0 5px #87CEEB, 0 0 10px #87CEEB, 0 0 15px #87CEEB; }
+    0% {
+        text-shadow: 0 0 5px #87CEEB, 0 0 10px #87CEEB, 0 0 15px #87CEEB;
+    }
+    50% {
+        text-shadow: 0 0 10px #87CEEB, 0 0 20px #87CEEB, 0 0 30px #87CEEB;
+    }
+    100% {
+        text-shadow: 0 0 5px #87CEEB, 0 0 10px #87CEEB, 0 0 15px #87CEEB;
+    }
 }
 
 .left {
@@ -27,7 +33,6 @@ header h1 {
     display: flex;
     gap: 50px;
     text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700;
-    letter-spacing: 2.3px; /* Расстояние между буквами */
     line-height: 1.8; /* Межстрочный интервал */
     animation: neonGlow 1.5s infinite alternate; /* Запуск анимации */
 }
@@ -68,9 +73,9 @@ header h1 {
 .filter-btn::before {
     content: "";
     background: linear-gradient(
-        45deg,
-        #FF0000, #FF7300, #FFFB00, #48FF00,
-        #00FFD5, #002BFF, #FF00C8, #FF0000
+            45deg,
+            #FF0000, #FF7300, #FFFB00, #48FF00,
+            #00FFD5, #002BFF, #FF00C8, #FF0000
     );
     position: absolute;
     top: -2px;
@@ -91,9 +96,15 @@ header h1 {
 }
 
 @keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 400% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
 }
 
 .filter-btn:hover::before {
@@ -170,10 +181,17 @@ header h1 {
 
 /* Анимации */
 @keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 400% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
 }
+
 .background-image {
     position: fixed; /* Фон остаётся на месте при скролле */
     width: 100vw;
@@ -205,11 +223,17 @@ header h1 {
 }
 
 
-
-@keyframes my {
-    0% { text-shadow: 0 0 5px #d400ff, 0 0 10px #d400ff, 0 0 15px #d400ff; }  /*мерцание*/
-    50% { text-shadow: 0 0 10px #a000ff, 0 0 20px #a000ff, 0 0 30px #a000ff; }
-    100% { text-shadow: 0 0 5px #7000ff, 0 0 10px #7000ff, 0 0 15px #7000ff; }
+@keyframes descrip {
+    0% {
+        text-shadow: 0 0 5px #d400ff, 0 0 10px #d400ff, 0 0 15px #d400ff;
+    }
+    /*мерцание*/
+    50% {
+        text-shadow: 0 0 10px #a000ff, 0 0 20px #a000ff, 0 0 30px #a000ff;
+    }
+    100% {
+        text-shadow: 0 0 5px #7000ff, 0 0 10px #7000ff, 0 0 15px #7000ff;
+    }
 }
 
 @font-face {
@@ -218,22 +242,23 @@ header h1 {
     font-weight: normal;
     font-style: normal;
 }
+
 .description {
     font-family: 'CyberFont', sans-serif; /* Киберпанковый шрифт */
     font-size: 20px; /* Размер текста */
     font-weight: 700; /* Толщина шрифта */
     color: #00ff00;
     text-shadow: 0 0 5px #d400ff, 0 0 10px #a000ff, 0 0 15px #7000ff; /* Градиентное свечение */
-    letter-spacing: 2.3px; /* Расстояние между буквами */
+    letter-spacing: 2px; /* Расстояние между буквами */
     line-height: 1.8; /* Межстрочный интервал */
-    animation: my 1.5s infinite alternate;
+    animation: descrip 1.5s infinite alternate;
 }
 
 .lo {
     font-family: 'CyberFont', sans-serif; /* Киберпанковый шрифт */
     color: #000000; /* Чёрный основной цвет */
     text-shadow: 0 0 5px #00BFFF, 0 0 10px #00BFFF, 0 0 15px #00BFFF; /* Чёрное свечение */
-    letter-spacing: 2.3px; /* Расстояние между буквами */
+    letter-spacing: 2px; /* Расстояние между буквами */
     line-height: 1.8; /* Межстрочный интервал */
 }
 
@@ -246,9 +271,18 @@ header h1 {
 
 /* Анимация для градиентного фона */
 @keyframes neon-gradient {
-    0% { background-position: 0% 50%; }  /* Начальная позиция градиента */
-    50% { background-position: 100% 50%; } /* В середине - смещение градиента вправо */
-    100% { background-position: 0% 50%; }  /* Возвращение в исходное положение */
+    0% {
+        background-position: 0 50%;
+    }
+    /* Начальная позиция градиента */
+    50% {
+        background-position: 100% 50%;
+    }
+    /* В середине - смещение градиента вправо */
+    100% {
+        background-position: 0 50%;
+    }
+    /* Возвращение в исходное положение */
 }
 
 /* Основной стиль кнопки */
@@ -267,16 +301,14 @@ header h1 {
     border: 2px solid rgba(255, 0, 255, 0.6); /* Полупрозрачная фиолетовая рамка */
 
     /* Фон с градиентом */
-    background: linear-gradient(100deg,#FF1493,#FF1493, #700080,#700080, #4B0082,#4B0082, #8B0000,#8B0000, #000000,#000000, #9400D3,#9400D3);
+    background: linear-gradient(100deg, #FF1493, #FF1493, #700080, #700080, #4B0082, #4B0082, #8B0000, #8B0000, #000000, #000000, #9400D3, #9400D3);
     background-size: 300% 300%; /* Увеличиваем размер градиента, чтобы он плавно переливался */
 
     /* Применяем анимацию градиента */
     animation: neon-gradient 7s ease infinite;
 
     /* Эффект свечения кнопки */
-    box-shadow:
-        0 0 10px rgba(255, 0, 255, 0.5),  /* Мягкое свечение */
-        0 0 20px rgba(255, 0, 255, 0.3);  /* Дальнее свечение */
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5), /* Мягкое свечение */ 0 0 20px rgba(255, 0, 255, 0.3); /* Дальнее свечение */
 
     /* Плавные переходы при изменении свойств */
     transition: transform 0.3s, box-shadow 0.3s;
@@ -287,10 +319,10 @@ header h1 {
     transform: scale(1.1); /* Увеличиваем кнопку на 10% */
 
     /* Усиливаем свечение */
-    box-shadow:
-        0 0 15px rgba(255, 0, 255, 0.8),
-        0 0 25px rgba(255, 0, 255, 0.6);
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.8),
+    0 0 25px rgba(255, 0, 255, 0.6);
 }
+
 .page-btn.disabled {
     pointer-events: none;
     opacity: 0.5;
@@ -308,3 +340,76 @@ header h1 {
 }
 
 
+/* Контейнер строки поиска */
+.search-container {
+    display: flex; /* Размещаем элементы в строку */
+    position: absolute;
+    margin-bottom: 20px; /* Отступ снизу */
+    right: 550px;
+    top: 155px;
+}
+
+/* Поле ввода */
+.search-box {
+    width: 300px; /* Ширина */
+    padding: 10px; /* Внутренний отступ */
+    font-size: 18px; /* Размер шрифта */
+    border: 2px solid rgba(0, 255, 255, 0.6); /* Неоновая граница */
+    border-radius: 5px; /* Скругление углов */
+    background-color: rgba(0, 0, 0, 0.8); /* Тёмный фон */
+    color: #0ff; /* Неоновый цвет текста */
+    outline: none; /* Убираем стандартный контур */
+    transition: 0.3s; /* Плавные изменения */
+}
+
+/* Эффект при фокусе */
+.search-box:focus {
+    border-color: #ff007f; /* Изменение цвета границы */
+    box-shadow: 0 0 10px #ff007f; /* Свечение */
+}
+
+/* Кнопка поиска */
+.search-btn {
+    padding: 10px 15px; /* Размеры кнопки */
+    margin-left: 10px; /* Отступ слева */
+    font-size: 18px;
+    border: none;
+    background: linear-gradient(100deg, #FF1493, #4B0082, #9400D3); /* Неоновый градиент */
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    transition: 0.3s;
+}
+
+/* Эффект при наведении */
+.search-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+}
+
+.nothing-find {
+    font-family: 'CyberFont', sans-serif; /* Киберпанковый шрифт */
+    position: absolute;
+    font-size: 70px;
+    top: 40%;
+    right: 31%;
+    color: #c6a318; /* Чёрный основной цвет */
+
+    letter-spacing: 2px; /* Расстояние между буквами */
+    line-height: 1.8; /* Межстрочный интервал */
+    animation: nothing 3s infinite alternate;
+}
+
+@keyframes nothing {
+    0% {
+        text-shadow: 0 0 5px #00d0ff, 0 0 10px #00d0ff, 0 0 15px #00d0ff;
+    }
+    /*мерцание*/
+    50% {
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
+    }
+    100% {
+        text-shadow: 0 0 5px #7000ff, 0 0 10px #7000ff, 0 0 15px #7000ff;
+    }
+}
