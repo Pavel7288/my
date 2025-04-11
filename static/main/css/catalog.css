@@ -13,108 +13,6 @@ header h1 {
     color: #00fff7; /* Неоновый цвет для текста */
 }
 
-@keyframes neonGlow {
-    0% {
-        text-shadow: 0 0 5px #87CEEB, 0 0 10px #87CEEB, 0 0 15px #87CEEB;
-    }
-    50% {
-        text-shadow: 0 0 10px #87CEEB, 0 0 20px #87CEEB, 0 0 30px #87CEEB;
-    }
-    100% {
-        text-shadow: 0 0 5px #87CEEB, 0 0 10px #87CEEB, 0 0 15px #87CEEB;
-    }
-}
-
-.left {
-    font-family: 'CyberFont', sans-serif;
-    position: absolute;
-    top: 50px;
-    left: 100px;
-    display: flex;
-    gap: 50px;
-    text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700;
-    line-height: 1.8; /* Межстрочный интервал */
-    animation: neonGlow 1.5s infinite alternate; /* Запуск анимации */
-}
-
-.filter-btn {
-    display: block;
-    width: fit-content;
-    margin: 15px auto 0; /* Центрирование */
-    padding: 20px 40px;
-    border: none;
-    outline: none;
-    color: #32CD32;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    position: relative;
-    z-index: 1;
-    border-radius: 40px;
-    text-align: center;
-    background: linear-gradient(45deg, #FF0000, #FF7300, #FFFB00, #48FF00);
-    transition: transform 0.3s;
-    text-decoration: none
-}
-
-/* Эффекты кнопки */
-.filter-btn::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: #333;
-    top: 0;
-    left: 0;
-    border-radius: 25px;
-    z-index: -1;
-}
-
-.filter-btn::before {
-    content: "";
-    background: linear-gradient(
-            45deg,
-            #FF0000, #FF7300, #FFFB00, #48FF00,
-            #00FFD5, #002BFF, #FF00C8, #FF0000
-    );
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    background-size: 500%;
-    z-index: -1;
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    filter: blur(4px);
-    animation: glowing 20s linear infinite;
-    transition: opacity .3s ease-in-out;
-    border-radius: 30px;
-    opacity: 0;
-}
-
-.filter-btn:hover {
-    transform: scale(1.1);
-}
-
-@keyframes glowing {
-    0% {
-        background-position: 0 0;
-    }
-    50% {
-        background-position: 400% 0;
-    }
-    100% {
-        background-position: 0 0;
-    }
-}
-
-.filter-btn:hover::before {
-    opacity: 1;
-}
-
-.filter-btn:active::after {
-    background: transparent;
-}
-
 /* Основная секция каталога */
 .catalog {
     display: grid;
@@ -411,5 +309,18 @@ header h1 {
     }
     100% {
         text-shadow: 0 0 5px #7000ff, 0 0 10px #7000ff, 0 0 15px #7000ff;
+    }
+}
+
+
+@keyframes neonGlow {   /* это переопределение свечения из base html*/
+    0% {
+        text-shadow: 0 0 5px #5eff00, 0 0 10px #5eff00, 0 0 15px #5eff00;
+    }
+    50% {
+        text-shadow: 0 0 10px #e6129c, 0 0 20px #e6129c, 0 0 30px #e6129c;
+    }
+    100% {
+        text-shadow: 0 0 5px #020202, 0 0 10px #020202, 0 0 15px #020202;
     }
 }

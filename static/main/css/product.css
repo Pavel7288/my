@@ -27,7 +27,6 @@ body {
     background: rgba(0, 0, 0, 0.7);
     padding: 30px;
     border-radius: 10px;
-    backdrop-filter: blur(5px);
     z-index: 1; /* Контент поверх фона */
     overflow: auto; /* Включаем прокрутку внутри блока */
     max-height: 90vh; /* Чтобы контент не выходил за границы экрана */
@@ -64,106 +63,26 @@ body {
     white-space: pre-line;
 }
 
-.left {
+
+.fp{
+    color: #8644bd;
+    font-family: 'CyberFont', sans-serif;
     position: absolute;
-    top: 50px;
-    left: 100px;
+    bottom: 400px;
+    left: 850px;
     display: flex;
     gap: 50px;
+    line-height: 1.8;
 }
 
-
-.order-btn {
-    display: block;
-    width: fit-content;
-    margin: 15px auto 0; /* Центрирование */
-    padding: 20px 40px;
-    border: none;
-    outline: none;
-    color: #FFF;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    position: relative;
-    z-index: 1;
-    border-radius: 40px;
-    text-align: center;
-    background: linear-gradient(45deg, #FF0000, #FF7300, #FFFB00, #48FF00);
-    transition: transform 0.3s;
-    text-decoration: none
-}
-
-/* Эффекты кнопки */
-.order-btn::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: #333;
-    top: 0;
-    left: 0;
-    border-radius: 25px;
-    z-index: -1;
-}
-
-.order-btn::before {
-    content: "";
-    background: linear-gradient(
-        45deg,
-        #FF0000, #FF7300, #FFFB00, #48FF00,
-        #00FFD5, #002BFF, #FF00C8, #FF0000
-    );
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    background-size: 500%;
-    z-index: -1;
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    filter: blur(4px);
-    animation: glowing 20s linear infinite;
-    transition: opacity .3s ease-in-out;
-    border-radius: 30px;
-    opacity: 0;
-}
-
-.order-btn:hover {
-    transform: scale(1.1);
-}
-
-.order-btn:hover::before {
-    opacity: 1;
-}
-
-.order-btn:active::after {
-    background: transparent;
-}
-@keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
-}
-
-/*@keyframes my {
-    0% { text-shadow: 0 0 5px #d400ff, 0 0 10px #d400ff, 0 0 15px #d400ff; }  /*мерцание*/
-    /*50% { text-shadow: 0 0 10px #a000ff, 0 0 20px #a000ff, 0 0 30px #a000ff; }
-    100% { text-shadow: 0 0 5px #7000ff, 0 0 10px #7000ff, 0 0 15px #7000ff; }
-}*/
-
-@font-face {
-    font-family: 'CyberFont';
-    src: url('/static/main/fonts/cyber.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-.description {
-    font-family: 'CyberFont', sans-serif; /* Киберпанковый шрифт */
-    font-size: 20px; /* Размер текста */
-    font-weight: 700; /* Толщина шрифта */
-    color: #00ff00;
-    text-shadow: 0 0 5px #d400ff, 0 0 10px #a000ff, 0 0 15px #7000ff; /* Градиентное свечение */
-    letter-spacing: 2.3px; /* Расстояние между буквами */
-    line-height: 1.8; /* Межстрочный интервал */
-    /*animation: my 1.5s infinite alternate;*/
-
+@keyframes neonGlow {
+    0% {
+        text-shadow: 0 0 5px #ff0000, 0 0 10px #aa00ff, 0 0 15px #37ff00;
+    }
+    50% {
+        text-shadow: 0 0 10px #0022ff, 0 0 20px #ffc300, 0 0 30px #e6129c;
+    }
+    100% {
+        text-shadow: 0 0 5px #87CEEB, 0 0 10px #87CEEB, 0 0 15px #87CEEB;
+    }
 }

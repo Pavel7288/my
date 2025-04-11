@@ -9,10 +9,8 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import os
 from pathlib import Path
 
-from django.conf.global_settings import STATICFILES_DIRS, MEDIA_URL, MEDIA_ROOT
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +25,7 @@ SECRET_KEY = 'django-insecure-=%2j#7bp$0_3eqantsmcmxkw*+bd95gh4r(m5jx-lmqbu$y!+7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*'] # поставь звёздочку, тебе что жалко что ли?
 
 
 # Application definition
@@ -44,6 +42,8 @@ INSTALLED_APPS = [
     'main',
     'goods',
     'users',
+    'cart',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -136,12 +136,23 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
-]
+] #это чтобы django знал что надо искать в static
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'users.User' #благодаря этому мы переопределили модель auth в users.models
 
 MEDIA_URL ='/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'media' #это чтобы работало добавление и взятие картинок из goods_images
+
+LOGIN_URL = '/users/login/' # это чтобы когда ты не зашёл в акк то если ты пытаешься зайти на страницу где он нужен чтобы login required переслал тебя на ту что указана
+
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_FROM = "mydjango111@gmail.com"
+# EMAIL_HOST_USER = "mydjango111@gmail.com"
+# EMAIL_HOST_PASSWORD = "aaoaifhebrtutooz" # пароль сгенерированный в gmail почте там где пароли приложения

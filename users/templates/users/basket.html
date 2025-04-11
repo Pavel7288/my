@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{#{% block css %}#}
+{#    <link rel="stylesheet" href="{% static 'main/css/cart.css' %}">#}
+{#{% endblock %}#}
+
+{% block about %}
+<body>
+    <div class="cart-container">
+        <h2>Оформление заказа</h2>
+        <!-- Корзина -->
+        <div class="cart-items">
+            <h3>Товары в корзине:</h3>
+            {% for item in cart_items %}
+                <div class="cart-item">
+                    <span class="item-name">{{ item.name }}</span>
+                    <span class="item-quantity">{{ item.quantity }}</span>
+                    <span class="item-price">{{ item.price }} $</span>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Общая сумма -->
+        <div class="total-price">
+            <span>Итого: </span><span>{{ total_price }} $</span>
+        </div>
+
+        <!-- Форма для оформления -->
+        <form action="{% url 'cart:checkout' %}" method="POST">
+            {% csrf_token %}
+
+            <label for="delivery_address">Адрес доставки</label>
+            <input type="text" id="delivery_address" name="delivery_address" placeholder="Введите ваш адрес" required>
+
+            <label for="payment_method">Способ оплаты</label>
+            <select name="payment_method" id="payment_method">
+                <option value="card">Карта</option>
+                <option value="cash">Наличные</option>
+            </select>
+
+            <button type="submit" class="checkout-btn">Оформить заказ</button>
+        </form>
+    </div>
+</body>
+{% endblock %}
+

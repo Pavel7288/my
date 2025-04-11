@@ -12,16 +12,18 @@ def catalog(request, category_slug=None):
     if query:
         products = search(query,search_by_category)
     elif category_slug == 'all':
-        products = Products.objects.all() # это можно сказать sql запрос SELECT * FROM Products и он помещает в переменную всё что ты выбрал
+        products = Products.objects.all() # это можно сказать sql запрос SELECT * FROM Products и он помещает в переменную всё, что ты выбрал
+    elif search_by_category:
+        products = Products.objects.filter(category__slug=search_by_category)
     else:
         products = get_list_or_404(Products, category__slug=category_slug) # category__slug это делается когда есть связь между таблицами, category это
         # название столбца в Products, а slug - это поле модели Categories, которое мы хотим использовать для фильтрации. Эта вся строка буквально
         # означает мы выведем ошибку если не найдём ни одного объекта, а если найдём, то выведем все продукты у которых в категории находится та категория которую мы прокинули
-        # а __ это синтаксис Django ORM для обращения к связным таблицам
+        # а __ - это синтаксис Django ORM для обращения к связным таблицам
     paginator = Paginator(products, 4)
     current_page = paginator.page(int(page))
     context = {
-        'l': search_by_category,
+        'request_slug': search_by_category,
         'title': 'Goods',
         'products': current_page,
         'page': page,
@@ -44,4 +46,4 @@ def make_order(request):
     context = {
         'title': 'Orders',
     }
-    return render(request, 'goods/basket.html', context)
+    return render(request, '', context)
