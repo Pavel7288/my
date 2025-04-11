@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'main/css/register.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
+{% endblock %}
+{% block about %}
+    <body>
+    <div class="left">
+        <a href="{% url 'main:main_page' %}" class="filter-btn">Назад</a>
+    </div>
+    <div class="register-container">
+        <h2>Вход в систему</h2>
+        <form action="{% url 'user:login' %}" method="POST">
+            {% csrf_token %}
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+        {% endif %}
+            <label for="id_username" class="text">Имя пользователя</label>
+            <input type="text" id="id_username" name="username" placeholder="Введите имя" required>
+            <label for="id_password" class="text">Пароль</label>
+            <input type="password" id="id_password" name="password" placeholder="Введите пароль" required>
+            {% if form.non_field_errors %}
+                <div class="form-text">{{ form.non_field_errors }}</div>
+            {% endif %}
+            <label>
+                <button type="submit" class="register-btn">Войти</button>
+            </label>
+        </form>
+        <p class="form-text">
+            Нет аккаунта? <a href="{% url 'user:registration' %}" class="form-text">Зарегистрируйся</a>
+        </p>
+    </div>
+    </body>
+    <img src="{% static 'main/image/city.png' %}" alt="" class="background-image">
+{% endblock %}

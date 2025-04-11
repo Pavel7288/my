@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cart_tags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'main/css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
+{% endblock %}
+{% block about %}
+    <div class="left">
+        <a href="{% url 'main:main_page' %}" class="filter-btn">Назад</a>
+    </div>
+    <body>
+    <div class="profile-container">
+        <!-- Карзина -->
+        <div id="cart-items-container"> {# эта строка есть в js и без неё не передаётся эта страница  #}
+            {% include "cart/cart_items.html" %}
+        </div>
+    </div>
+    </body>
+    <img src="{% static 'main/image/city.png' %}" alt="" class="background-image">
+{% endblock %}
+
+

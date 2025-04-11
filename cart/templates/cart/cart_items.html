@@ -1,0 +1,41 @@
+{% load cart_tags %}
+{% load static %}
+    {% cart_count request as cart %}
+    {% if cart %}
+        <h3>Ваша корзина</h3>
+    {% else %}
+        <h3>Пусто, если что-то хочешь увидеть, добавь товар</h3>
+    {% endif %}
+    {% for cart in cart %}
+
+        <div class="cart-item" id= {{ item.id }}>
+            <div class="item-name">{{ cart.product.name }}</div>
+            <div class="input-group"> {# без этого не передаётся в js input#}
+                <div class="custom-number-input">
+                    <span class="input-group-btn">
+                    <button type="button" class="decrement" data-cart-id="{{ cart.id }}"
+                            data-cart-change-url="{% url 'cart:cart_change' %}">
+                        {% csrf_token %}
+                        −</button>
+                        </span>
+                    <input type="text" class="number" value="{{ cart.quantity }}" readonly>
+                    <span class="input-group-btn">
+                    <button type="button" class="increment" data-cart-id="{{ cart.id }}"
+                            data-cart-change-url="{% url 'cart:cart_change' %}">
+                        {% csrf_token %}
+                        +</button>
+                    </span>
+                </div>
+            </div>
+            <div class="item-price" data-unit-price="{{ cart.product.price }}">
+                {{ cart.product_cost }}$
+            </div>
+            <div class="">
+                <a class="remove-button remove-from-cart" href="{% url 'cart:cart_remove' %}"
+                   data-cart-id="{{ cart.id }}">Удалить</a>
+            </div>
+        </div>
+    {% endfor %}
+    {% if cart %}
+        <button type="submit" class="update-btn">Перейти к оформлению {{ cart.total_price }}$</button>
+    {% endif %}

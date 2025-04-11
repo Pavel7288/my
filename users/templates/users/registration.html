@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'main/css/register.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
+{% endblock %}
+{% block about %}
+    <div class="left">
+        <a href="{% url 'main:main_page' %}" class="filter-btn">Назад</a>
+    </div>
+    <body>
+    <div class="register-container">
+        <h2>Регистрация</h2>
+        <form action="{% url 'user:registration' %}" method="POST">
+            {% csrf_token %}
+
+            <label for="id_username" class="text">Имя пользователя</label>
+            <input type="text" name="username" id="id_username" placeholder="Введите имя пользователя" required>
+            {% if form.username.errors %}
+                <div class="form-text">{{ form.username.errors }}</div>
+            {% endif %}
+
+            <label for="id_email" class="text">Email</label>
+            <input type="email" name="email" id="id_email" placeholder="Введите e-mail" required>
+            {% if form.email.errors %}
+                <div class="form-text">{{ form.email.errors }}</div>
+            {% endif %}
+
+            <label for="id_number" class="text">Номер телефона</label>
+            <input type="tel" name="number" id="id_number" placeholder="Введите номер телефона" required>
+            {% if form.number.errors %}
+                <div class="form-text">{{ form.number.errors }}</div>
+            {% endif %}
+
+            <label for="id_password1" class="text">Пароль</label>
+            <input type="password" name="password1" id="id_password1" placeholder="Введите пароль" required>
+            {% if form.password1.errors %}
+                <div class="form-text">{{ form.password1.errors }}</div>
+            {% endif %}
+
+            <label for="id_password2" class="text">Подтверждение пароля</label>
+            <input type="password" name="password2" id="id_password2" placeholder="Подтвердите пароль" required>
+            {% if form.password2.errors %}
+                <div class="form-text">{{ form.password2.errors }}</div>
+            {% endif %}
+            <label>
+                <button type="submit" class="register-btn ">Зарегистрироваться</button>
+            </label>
+        </form>
+    </div>
+    </body>
+    <img src="{% static 'main/image/city.png' %}" alt="" class="background-image">
+{% endblock %}
+
+
+
