@@ -10,7 +10,9 @@
     <title>{{ title }}</title>
 </head>
 
-<script src="{% static 'main/js/message.js' %}"></script>
+
+
+
 {% if messages %}
     <div class="messages">
         {% for message in messages %}
@@ -30,6 +32,7 @@
 
 {% block about %}{% endblock %}
 {% block footer %}{% endblock %}
+<script src="{% static 'main/js/message.js' %}"></script>
 <script src="{% static "main/js/jquery/jquery-3.7.0.min.js" %}"></script>
 <script src="{% static 'main/js/jquery-ajax.js' %}"></script>
 

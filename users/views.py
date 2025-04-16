@@ -1,10 +1,12 @@
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Prefetch
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
 from cart.models import Cart
+from orders.models import Order, OrderItem
 from users.forms import UserRegistrationForm, ProfileForm, UserLoginForm
 
 
@@ -28,7 +30,7 @@ def login(request):
                 if session_key:
                     Cart.objects.filter(session_key=session_key).update(user=user)
 
-                redirect_page = request.GET.get('next',None)
+                redirect_page = request.POST.get('next')
                 if redirect_page and redirect_page != reverse('user:logout'):
                     return HttpResponseRedirect(request.POST.get('next'))
                 return HttpResponseRedirect(reverse('main:main_page'))  # переводит нас на основную страницу
@@ -85,14 +87,20 @@ def profile(request):
             return HttpResponseRedirect(reverse('main:main_page'))
     else:
         form = ProfileForm(instance=request.user)
+
+    orders = Order.objects.filter(user=request.user).prefetch_related(Prefetch('orderitem_set',queryset=OrderItem.objects.select_related("product"))).order_by('-id')
     context = {
         'title': 'Профиль',
         'form': form,
+        'orders': orders,
     }
     return render(request, 'users/profile.html', context)
 
 
 def user_cart(request):
-    return render(request, 'cart/no_name_client.html')
+    context = {
+        'title': 'Профиль',
+    }
+    return render(request, 'cart/no_name_client.html',context)
 
 

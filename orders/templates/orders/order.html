@@ -1,10 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
+{% load cart_tags %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'main/css/orders.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
+{% endblock %}
 
-</body>
-</html>
+{% block about %}
+    <div class="left">
+        <a href="{% url 'user:profile' %}" class="filter-btn">Назад</a>
+    </div>
+    <div class="order-wrapper">
+        <h2>Оформление заказа</h2>
+        <form method="POST" action="{% url 'orders:create_order' %}">
+            {% csrf_token %}
+            {% cart_count request as cart_items %}
+            {% for cart in cart_items %}
+                <div class="cart-item">
+                    <div class="item-details">
+                        <p><strong>Наименование:</strong> {{ cart.product.name }}</p>
+                        <p><strong>Количество:</strong> {{ cart.quantity }}</p>
+                        <p><strong>Цена:</strong> {{ cart.product_cost }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <label for="id_username">Имя</label>
+                <input type="text" id="id_username" name="username" class="form-control"
+                       value='{% if form.username.value %}{{ form.username.value }}{% endif %}' required>
+            {#form передаём в контексте во views чтобы тут юзать#}
+            {# (data=request.POST) оно создаёт форму которая собирает с input, инфу name и чему оно равно#}
+            {# то есть оно передаёт в name то что в value и теперь username = value#}
+            </div>
+            {% if form.username.errors %}
+                <div class="form-text">{{ form.username.errors }}</div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="id_phone_number">Телефон</label>
+                <input type="text" id="id_phone_number" name="phone_number"
+                       value='{% if form.phone_number.value %}{{ form.phone_number.value }}{% endif %}'
+                        placeholder="+375231234587" required>
+                {#  если у тебя в form написано phone_number то и тут так какие там поля есть такие все должны быть тут#}
+            </div>
+            {% if form.phone_number.errors %}
+                <div class="form-text">{{ form.phone_number.errors }}</div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="id_payment_on_get">Способ оплаты</label>
+                <div class="form-check">
+                    <input id="id_payment_on_get" name="payment_on_get" type="radio" value="0" checked>
+                    <label for="id_payment_on_get">Оплата картой</label>
+                </div>
+                <div class="form-check">
+                    <input id="id_payment_on_get" name="payment_on_get" type="radio" value="1" checked>
+                    <label for="id_payment_on_get">Наличными/картой при получении</label>
+                </div>
+            </div>
+            {% if form.phone.errors %}
+                <div class="form-text">{{ form.phone.errors }}</div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="id_requires_delivery">Способ доставки</label>
+                <div class="form-check">
+                    <input id="id_requires_delivery" name="requires_delivery" type="radio" value="1" checked>
+                    <label for="id_requires_delivery">Нужна доставка</label>
+                </div>
+                <div class="form-check">
+                    <input id="id_requires_delivery" name="requires_delivery" type="radio" value="0" checked>
+                    <label for="id_requires_delivery">Самовывоз</label>
+                </div>
+
+                {% if form.requires_delivery.errors %}
+                    <div class="form-text">{{ form.requires_delivery.errors }}</div>
+                {% endif %}
+            </div>
+            <div id="delivery_fields" class="form-group hidden">
+                <label for="id_delivery_address">Адрес доставки</label>
+                <input type="text" id="id_delivery_address" name="delivery_address"
+                       value="{{ form.delivery_address.value|default_if_none:'' }}"
+                       placeholder="Город, улица, дом, квартира">
+
+            </div>
+            {% if form.delivery_address.errors %}
+                <div class="form-text">{{ form.delivery_address.errors }}</div>
+            {% endif %}
+
+            <button type="submit" class="checkout-btn">Оформить весь заказ</button>
+        </form>
+
+    </div>
+    <script src="{% static 'main/js/orders.js' %}"></script>
+    <img src="{% static 'main/image/city.png' %}" alt="" class="background-image">
+{% endblock %}

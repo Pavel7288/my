@@ -22,16 +22,16 @@
             </div>
         </div>
     </main>
-    {% csrf_token %}
-    <a href="{% url 'cart:cart_add' %}" class="filter-btn fp add-to-cart" data-product-id="{{ product.id }}">
 
-        Заказать</a>{#  тут должно быть добавить в корзину но пока так делаем   #}
+    <a href="{% url 'cart:cart_add' %}" class="filter-btn fp add-to-cart" data-product-id="{{ product.id }}">{% csrf_token %}Добавить в корзину</a>
+
     <div class="left">
         <a href="
                 {% if request.GET.q %}{% url 'goods:search' %}?{% change_param %}{% elif request.GET.category %}{% url 'goods:index' request.GET.category %}?{% change_param %}{% endif %}"
                 {#если делается запрос тогда передаётся параметр q то оно переопределяет начальный путь который был взят из change_param(url который сейчас на странице)#}
                 {#и дальше передаёт запросом весь change_param а именно page, q и category и получается что нас перекидывает на страницу goods:search и подставляет эти#}
                 {#параметры| 2 часть в другом случае также переопределяется как и в 1 части но ещё надо прокинуть category_slug, делается это запросом #}
+
            {% if request.GET %}class="filter-btn">Назад</a>{% else %}{% endif %}
     </div>
     </body>

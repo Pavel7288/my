@@ -10,13 +10,6 @@ def index(request):
     return render(request, 'main/index.html', context)
 
 
-def something(request):
-    context = {
-        'title': 'sp',
-    }
-    return render(request, 'main/button.html', context)
-
-
 def about(request):
     context = {
         'title': 'О нас',

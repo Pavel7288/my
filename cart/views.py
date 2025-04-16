@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
@@ -32,9 +33,10 @@ def cart_add(request):
     cart_items_html = render_to_string(
         'cart/cart_items.html',{'carts':user_cart}, request=request)
     response_data = {
-        'message': 'Товар добавлен в корзину',
+        'success': 'Товар добавлен в корзину',
         'cart_items_html': cart_items_html,
     }
+
     return JsonResponse(response_data)
 
 

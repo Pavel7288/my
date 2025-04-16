@@ -15,19 +15,19 @@
             {% csrf_token %}
 
             <label for="id_username" class="text">Имя пользователя</label>
-            <input type="text" name="username" id="id_username" placeholder="Введите имя пользователя" required>
+            <input type="text" name="username" id="id_username" placeholder="Введите имя пользователя" value='{% if form.username.value %}{{ form.username.value }}{% endif %}' required>
             {% if form.username.errors %}
                 <div class="form-text">{{ form.username.errors }}</div>
             {% endif %}
 
             <label for="id_email" class="text">Email</label>
-            <input type="email" name="email" id="id_email" placeholder="Введите e-mail" required>
+            <input type="email" name="email" id="id_email" placeholder="Введите e-mail" value='{% if form.email.value %}{{ form.email.value }}{% endif %}' required>
             {% if form.email.errors %}
                 <div class="form-text">{{ form.email.errors }}</div>
             {% endif %}
 
             <label for="id_number" class="text">Номер телефона</label>
-            <input type="tel" name="number" id="id_number" placeholder="Введите номер телефона" required>
+            <input type="tel" name="number" id="id_number" placeholder="Введите номер телефона" value='{% if form.number.value %}{{ form.number.value }}{% endif %}' required>
             {% if form.number.errors %}
                 <div class="form-text">{{ form.number.errors }}</div>
             {% endif %}

@@ -2,6 +2,7 @@
 {% load static %}
 {% load cart_tags %}
 
+
 {% block css %}
     <link rel="stylesheet" href="{% static 'main/css/profile.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
@@ -12,49 +13,84 @@
         <a href="{% url 'main:main_page' %}" class="filter-btn">Назад</a>
     </div>
     <body>
-    <div class="profile-container">
+    <div class="page-wrapper profile-page">
+        <div class="profile-container">
+            <div class="profile-header">
+                <h2>Мой Профиль</h2>
+            </div>
+            <!-- Профиль пользователя -->
+            <div class="profile-info">
+                <h3>Персональная информация</h3>
+
+                <form action="{% url 'user:profile' %}" method="POST">
+                    {% csrf_token %}
+
+                    <label for="id_username">Имя пользователя</label>
+                    <input type="text" id="id_username" name="username" placeholder="Ваше имя"
+                           value="{{ user.username }}"
+                           required>
+                    {% if form.username.errors %}
+                        <div class="form-text">{{ form.username.errors }}</div>
+                    {% endif %}
+
+                    <label for="id_email">Email</label>
+                    <input type="email" id="id_email" name="email" placeholder="Ваш email" value="{{ user.email }}"
+                           required>
+                    {% if form.email.errors %}
+                        <div class="form-text">{{ form.email.errors }}</div>
+                    {% endif %}
+
+                    <label for="id_number">Номер телефона</label>
+                    <input type="text" id="id_number" name="number" placeholder="Ваш номер телефона"
+                           value="{{ user.number }}" required>
+                    {% if form.number.errors %}
+                        <div class="form-text">{{ form.number.errors }}</div>
+                    {% endif %}
+
+                    <button type="submit" class="update-btn">Обновить профиль</button>
+                </form>
+            </div>
+            <!-- Карзина -->
+            <div id="cart-items-container">{# эта строка есть в js и без неё не передаётся эта страница  #}
+                {% include "cart/cart_items.html" %}
+            </div>
+            {% if cart %}
+                <a type="submit" href="{% url 'orders:create_order' %}" class="update-btn">Перейти к
+                    оформлению {{ cart.total_price }}$</a>
+            {% endif %}
+        </div>
+
+
+       <div class="profile-container right">
+    <div class="orders-scroll-area">
         <div class="profile-header">
-            <h2>Мой Профиль</h2>
+            <h2>Мои Заказы</h2>
         </div>
-        <!-- Профиль пользователя -->
-        <div class="profile-info">
-            <h3>Персональная информация</h3>
+        {% if orders %}
+            {% for order in orders %}
+                <div class="profile-info">
+                    <h3>Заказ №{{ order.id }} от {{ order.created_timestamp }}</h3>
+                        <h3>{{ order.status }}</h3>
+                    {% for item in order.orderitem_set.all %}
+                        <div class="cart-item">
+                            <div class="item-name">{{ item.product.name }}</div>
+                            <div class="item-price">{{ item.products_price }} $</div>
+                            <div class="item-quantity">{{ item.quantity }} шт</div>
+                        </div>
+                    {% endfor %}
+                    <p>Общая цена: {{ order.orderitem_set.total_price }} $</p>
+                </div>
 
-            <form action="{% url 'user:profile' %}" method="POST">
-                {% csrf_token %}
-
-                <label for="id_username">Имя пользователя</label>
-                <input type="text" id="id_username" name="username" placeholder="Ваше имя" value="{{ user.username }}"
-                       required>
-                {% if form.username.errors %}
-                    <div class="form-text">{{ form.username.errors }}</div>
-                {% endif %}
-
-                <label for="id_email">Email</label>
-                <input type="email" id="id_email" name="email" placeholder="Ваш email" value="{{ user.email }}"
-                       required>
-                {% if form.email.errors %}
-                    <div class="form-text">{{ form.email.errors }}</div>
-                {% endif %}
-
-                <label for="id_number">Номер телефона</label>
-                <input type="text" id="id_number" name="number" placeholder="Ваш номер телефона"
-                       value="{{ user.number }}" required>
-                {% if form.number.errors %}
-                    <div class="form-text">{{ form.number.errors }}</div>
-                {% endif %}
-
-                <button type="submit" class="update-btn">Обновить профиль</button>
-            </form>
-        </div>
-        <!-- Карзина -->
-        <div id="cart-items-container"> {# эта строка есть в js и без неё не передаётся эта страница  #}
-            {% include "cart/cart_items.html" %}
-        </div>
+            {% endfor %}
+        {% else %}
+            <p>У вас пока нет заказов.</p>
+        {% endif %}
     </div>
+</div>
+</div>
+
     </body>
+
     <img src="{% static 'main/image/city.png' %}" alt="" class="background-image">
 {% endblock %}
 {#    надо чтобы ещё отмечалось общее количество всех товаров и их стоимость#}
-
-
