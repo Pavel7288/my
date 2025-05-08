@@ -33,7 +33,8 @@
     <form role="search" method="GET" action="{% url 'catalog:search' %}?category={{ slug }}" class="search-container">
         <label>
             <input type="search" name="q" class="search-box" placeholder="Поиск по товарам...">
-            <input type="hidden" name="category" value="{% if request.GET.category %}{{ request_slug }}{% else %}{{ slug }}{% endif %}">
+            <input type="hidden" name="category"
+                   value="{% if request.GET.category %}{{ request_slug }}{% else %}{{ slug }}{% endif %}">
             {# сверху request_slug это как request.GET.category потому что это прокидывается во views как search_by_category = request.GET.get('category', None) #}
             <button type="submit" class="search-btn">🔍</button>
         </label>
@@ -45,7 +46,8 @@
                 <h2>{{ product.name }}</h2>
                 <h2>id - {{ product.display_id }}</h2>
                 <p class="price">{{ product.price }} $</p>
-                <a class="filter-btn" href="{% url 'goods:product' product.slug %}{% if request.GET.category %}?q={{ request.GET.q }}&category={{ request_slug }}{% else %}?category={{ slug }}{% endif %}&page={{ page }}">Подробнее</a>
+                <a class="filter-btn" href="
+                        {% url 'goods:product' product.slug %}{% if request.GET.category %}?q={{ request.GET.q }}&category={{ request_slug }}{% else %}?category={{ slug }}{% endif %}&page={{ page }}">Подробнее</a>
             </div>
         {% endfor %}
     </main>

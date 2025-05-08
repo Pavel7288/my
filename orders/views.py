@@ -54,7 +54,7 @@ def create_order(request):
                         messages.success(request,'Заказ оформлен')
                         return redirect('user:profile')
             except ValidationError as e:
-                messages.success(request, str(e))
+                messages.success(request, str(e.messages[0]))
                 return redirect('user:profile')
     else:
         initial = {

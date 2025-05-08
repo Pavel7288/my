@@ -17,9 +17,7 @@
         </div>
     {% endif %}
     <div class="left-column">
-        {% tag_categories as categories %}
-        {% for category in categories %}
-        {% endfor %}
+
         <a href="{% url 'catalog:index' category_slug='all' %}" class="btn">{{ button_1 }}</a>
         {% if user.is_superuser or user.is_staff %}
             <a href="{% url 'admin:index' %}" class="btn">Админ</a>
