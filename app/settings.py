@@ -9,12 +9,11 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import os
 from pathlib import Path
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -23,10 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=%2j#7bp$0_3eqantsmcmxkw*+bd95gh4r(m5jx-lmqbu$y!+7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*'] # поставь звёздочку, тебе что жалко что ли?
-
+ALLOWED_HOSTS = ['*']  # поставь звёздочку, тебе что жалко что ли?
 
 # Application definition
 
@@ -39,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
 
+    'django_celery_beat',
+    'django_celery_results',
     'main',
     'goods',
     'users',
@@ -61,7 +61,8 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates' ], #Это чтобы оно видело в корне папку BASE DIR это корень проекта, а templates директория в корне
+        'DIRS': [BASE_DIR / 'templates'],
+        # Это чтобы оно видело в корне папку BASE DIR это корень проекта, а templates директория в корне
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,7 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'app.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -87,17 +87,29 @@ WSGI_APPLICATION = 'app.wsgi.application'
 #     }
 # }
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_postgres',
-        'HOST': 'localhost',
-        'PASSWORD': 'p',
-        'USER': 'new',
-        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME', 'django_postgres'),
+        'USER': os.environ.get('DB_USER', 'new'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'p'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'django_postgres',
+#         'HOST': 'localhost',
+#         'PASSWORD': 'p',
+#         'USER': 'new',
+#         'PORT': '5432',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -117,7 +129,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -129,25 +140,25 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
-] #это чтобы django знал что надо искать в static
+]  # это чтобы django знал что надо искать в static
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # это чтобы сделать в докере директорию где хранится вся статика
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'users.User' #благодаря этому мы переопределили модель auth в users.models
+AUTH_USER_MODEL = 'users.User'  # благодаря этому мы переопределили модель auth в users.models
 
-MEDIA_URL ='/media/'
-MEDIA_ROOT = BASE_DIR / 'media' #это чтобы работало добавление и взятие картинок из goods_images
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'  # это чтобы работало добавление и взятие картинок из goods_images
 
-LOGIN_URL = '/users/login/' # это чтобы когда ты не зашёл в акк то если ты пытаешься зайти на страницу где он нужен чтобы login required переслал тебя на ту что указана
+LOGIN_URL = '/users/login/'  # это чтобы когда ты не зашёл в акк то если ты пытаешься зайти на страницу где он нужен чтобы login required переслал тебя на ту что указана
 
 # EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # EMAIL_HOST = "smtp.gmail.com"
@@ -157,23 +168,40 @@ LOGIN_URL = '/users/login/' # это чтобы когда ты не зашёл 
 # EMAIL_HOST_USER = "mydjango111@gmail.com"
 # EMAIL_HOST_PASSWORD = "aaoaifhebrtutooz" # пароль сгенерированный в gmail почте там где пароли приложения
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache", # дефолт тк ты через библиотеку с редисом работаешь
+        "LOCATION": "redis://redis:6379/0",  # если Redis у тебя в контейнере с именем redis
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+CELERY_TASK_TRACK_STARTED = True
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TIMEZONE = TIME_ZONE
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
 
 
 
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
-#как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+# как писать тесты в проекте максимально эффективно и вообще тут их писать
+

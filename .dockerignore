@@ -1,0 +1,50 @@
+# Python
+pycache/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdm.toml
+*.mypy_cache/
+
+# Env & Secrets
+.env
+*.env
+.env.*
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+
+# Django static/media (если собираешь иначе)
+staticfiles/
+media/
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Editor configs
+*.swp
+*.swo
+*.idea/
+*.vscode/
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Compiled files
+*.so
+*.egg
+*.egg-info/
+dist/
+requirements-dev.txt
+dock
+

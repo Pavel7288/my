@@ -1,0 +1,112 @@
+services:
+  db:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  web: # 🌐 Обратный прокси
+    build: .    #это значит ищи один докерфайл в корне проекта и собирай его
+    image: django:1.0  #image используется тут, чтобы назвать наш образ
+    container_name: django
+    command: gunicorn app.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./app:/app/app
+      - ./cart:/app/cart
+      - ./fixtures:/app/fixtures
+      - ./goods:/app/goods
+      - ./main:/app/main
+      - ./media:/app/media
+      - ./nginx:/app/nginx
+      - ./orders:/app/orders
+      - ./staticfiles:/app/staticfiles
+      - ./templates:/app/templates
+      - ./users:/app/users
+      - ./manage.py:/app/manage.py
+      - ./requirements.txt:/app/requirements.txt
+      - static:/app/staticfiles     #Django нужен доступ к staticfiles, чтобы туда всё собрать (поэтому volume static:/app/staticfiles).
+      - ./media:/app/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db             # Сначала запускается контейнер с базой данны
+    environment: #переменное окружение для базы данных
+      - DB_NAME=mydb
+      - DB_USER=myuser
+      - DB_PASSWORD=mypassword
+      - DB_HOST=db
+      - DB_PORT=5432
+
+
+  nginx:
+    image: nginx:1.25
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default:/etc/nginx/conf.d/default.conf   # это настройки nginx
+      - static:/app/staticfiles   # тут оно само видит статику и перемещает всю её в контейнер. nginx нужен доступ к staticfiles, чтобы оттуда всё раздавать (тот же volume в nginx).
+      - ./media:/app/media        # тут оно отвечает из какой папки куда ты кладёшь всё из моей в контейнера,(загружаемые пользователем файлы)
+    depends_on: # если есть с начала ./, то надо прокидывать в volumes в конце
+      - web
+
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    depends_on:
+      - web
+
+
+  celery:
+    build: .
+    image: celery:1
+    container_name: celery
+    command: celery -A app worker --loglevel=info
+    volumes:
+      - ./app:/app/app
+      - ./cart:/app/cart
+      - ./fixtures:/app/fixtures
+      - ./goods:/app/goods
+      - ./main:/app/main
+      - ./media:/app/media
+      - ./nginx:/app/nginx
+      - ./orders:/app/orders
+      - ./staticfiles:/app/staticfiles
+      - ./templates:/app/templates
+      - ./users:/app/users
+      - ./manage.py:/app/manage.py
+      - ./requirements.txt:/app/requirements.txt
+      - static:/app/staticfiles
+      - ./media:/app/media
+    environment: # бд тут нужна, чтобы сохранять результаты в неё, а у меня именно так и делается
+      - DB_NAME=mydb
+      - DB_USER=myuser
+      - DB_PASSWORD=mypassword
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      - web
+      - redis
+
+  flower:
+    image: mher/flower:0.9.7
+    container_name: flower
+    command: flower --port=5555 --broker=redis://redis:6379/0
+    ports:
+      - '5555:5555'
+    depends_on:
+      - web
+      - redis
+volumes:
+  pgdata:      # Volume для хранения данных PostgreSQL
+  static:      # Volume для хранения статических файлов Django, используется и web, и nginx
+  redis_data:  # для хранения данных редиса, иначе докер не даст создать контейнер, где-то же надо хранить данные
