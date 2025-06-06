@@ -12,8 +12,9 @@ django-redis==5.4.0
 celery==5.5.2
 django-celery-results==2.6.0
 django-celery-beat==2.8.1    #для того чтобы в админке можно было запускать периодические задачи
+django-environ==0.12.0
+psycopg==3.2.9
 flower==2.0.1
-psycopg2-binary==2.9.10  #это нам локально не нужно
 gunicorn==23.0.0  #это нам локально не нужно
 # файлы которые нужны в докере
 # pip freeze > requirements.txt

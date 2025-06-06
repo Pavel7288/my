@@ -6,10 +6,11 @@ from users.models import User
 
 
 class UserLoginForm(AuthenticationForm):
+    pass
     # username = forms.CharField()
     # password = forms.CharField()
-    class Meta:
-        model = User
+    # class Meta:
+    #     model = User
         # fields = ('username', 'password') хз зачем это, и без него работает
 
 
@@ -52,6 +53,3 @@ class ProfileForm(UserChangeForm):
             'number',
             'username',
             "email")
-        number = CharField()
-        username = CharField()
-        email = CharField()

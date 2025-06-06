@@ -8,7 +8,12 @@ from goods.models import Products
 from orders.models import Order
 
 
-@shared_task(bind=True,max_retries=3, default_retry_delay=10)
+@shared_task(bind=True,
+             max_retries=3,
+             default_retry_delay=10,      # задержка повторения
+             acks_late=True,              # подтверждать задачу только после успешного выполнения
+             reject_on_worker_lost=True   # возвращать задачу при сбое
+             )
 def add_to_queue(self,order_id, prod):
     print("🎯 Задача Celery запущена")
     time.sleep(10)

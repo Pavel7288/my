@@ -9,12 +9,14 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import os
+import os,environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+env.read_env(f'.env.local')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -22,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=%2j#7bp$0_3eqantsmcmxkw*+bd95gh4r(m5jx-lmqbu$y!+7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = env.bool("DEBUG")
 
 ALLOWED_HOSTS = ['*']  # поставь звёздочку, тебе что жалко что ли?
 
@@ -91,11 +93,11 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'django_postgres'),
-        'USER': os.environ.get('DB_USER', 'new'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'p'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
@@ -171,14 +173,14 @@ LOGIN_URL = '/users/login/'  # это чтобы когда ты не зашёл
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache", # дефолт тк ты через библиотеку с редисом работаешь
-        "LOCATION": "redis://redis:6379/0",  # если Redis у тебя в контейнере с именем redis
+        "LOCATION": env("R_LOCATION"),  # если Redis у тебя в контейнере с именем redis
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     }
 }
 CELERY_TASK_TRACK_STARTED = True
-CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_BROKER_URL = env("R_LOCATION")
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TIMEZONE = TIME_ZONE
 # CELERY_ACCEPT_CONTENT = ['json']

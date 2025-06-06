@@ -7,3 +7,6 @@ media/
 .png
 /static/main/fonts/cyber.ttf
 /dock
+.env
+*.env
+.env.*

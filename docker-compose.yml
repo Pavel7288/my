@@ -13,7 +13,6 @@ services:
     build: .    #это значит ищи один докерфайл в корне проекта и собирай его
     image: django:1.0  #image используется тут, чтобы назвать наш образ
     container_name: django
-    command: gunicorn app.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./app:/app/app
       - ./cart:/app/cart
@@ -30,16 +29,12 @@ services:
       - ./requirements.txt:/app/requirements.txt
       - static:/app/staticfiles     #Django нужен доступ к staticfiles, чтобы туда всё собрать (поэтому volume static:/app/staticfiles).
       - ./media:/app/media
+    env_file: .env.docker
     ports:
       - "8000:8000"
     depends_on:
       - db             # Сначала запускается контейнер с базой данны
-    environment: #переменное окружение для базы данных
-      - DB_NAME=mydb
-      - DB_USER=myuser
-      - DB_PASSWORD=mypassword
-      - DB_HOST=db
-      - DB_PORT=5432
+
 
 
   nginx:
@@ -59,7 +54,7 @@ services:
     image: redis:7
     container_name: redis
     ports:
-      - "6379:6379"
+      - "6380:6379"  # чтобы локальный редис не пересекался
     volumes:
       - redis_data:/data
     depends_on:
@@ -87,12 +82,7 @@ services:
       - ./requirements.txt:/app/requirements.txt
       - static:/app/staticfiles
       - ./media:/app/media
-    environment: # бд тут нужна, чтобы сохранять результаты в неё, а у меня именно так и делается
-      - DB_NAME=mydb
-      - DB_USER=myuser
-      - DB_PASSWORD=mypassword
-      - DB_HOST=db
-      - DB_PORT=5432
+    env_file: .env.docker
     depends_on:
       - web
       - redis
