@@ -61,7 +61,7 @@ def create_order(request):
                 return redirect('user:profile')
 
 
-            messages.success(request, f'Заказ будет ждать оформления')
+            messages.success(request, 'Заказ будет ждать оформления')
             return redirect('user:profile')
     else:
         initial = {

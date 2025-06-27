@@ -7,4 +7,4 @@ class GoodsConfig(AppConfig):
     verbose_name = "Товары"
 
     def ready(self):
-        import goods.signals
+        import goods.signals  # noqa: F401

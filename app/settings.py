@@ -9,16 +9,14 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import os,environ
+import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
-env.read_env(f'.env.local')
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+env.read_env('.env.local')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-=%2j#7bp$0_3eqantsmcmxkw*+bd95gh4r(m5jx-lmqbu$y!+7'
@@ -28,7 +26,6 @@ DEBUG = env.bool("DEBUG")
 
 ALLOWED_HOSTS = ['*']  # поставь звёздочку, тебе что жалко что ли?
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -79,8 +76,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'app.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # DATABASES = {
 #     'default': {
@@ -93,28 +88,16 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
     }
 }
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'django_postgres',
-#         'HOST': 'localhost',
-#         'PASSWORD': 'p',
-#         'USER': 'new',
-#         'PORT': '5432',
-#     }
-# }
 
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -131,8 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'ru'
 
@@ -142,14 +123,13 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]  # это чтобы django знал что надо искать в static
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # это чтобы сделать в докере директорию где хранится вся статика
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # это, чтобы указать директорию в докере куда будет собираться статика
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -187,23 +167,4 @@ CELERY_TIMEZONE = TIME_ZONE
 # CELERY_TASK_SERIALIZER = 'json'
 # CELERY_RESULT_SERIALIZER = 'json'
 
-
-
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
-# как писать тесты в проекте максимально эффективно и вообще тут их писать
 

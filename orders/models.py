@@ -33,7 +33,7 @@ class Order(models.Model):
         verbose_name_plural = "Заказы"
 
     def __str__(self):
-        username = self.user.username if self.user else f"аноним"
+        username = self.user.username if self.user else "аноним"
         return f"Заказ № {self.pk} | Покупатель {username}"
 
 

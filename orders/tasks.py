@@ -16,7 +16,7 @@ from orders.models import Order
              )
 def add_to_queue(self,order_id, prod):
     print("🎯 Задача Celery запущена")
-    time.sleep(10)
+    time.sleep(5)
     try:
         with transaction.atomic():
             products_to_update = []

@@ -9,4 +9,5 @@ media/
 /dock
 .env
 *.env
-.env.*
+.env.*!/local.sh
+!/dock
