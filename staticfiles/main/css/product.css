@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    overflow: hidden; /* Убирает скролл, если фон больше экрана */
+}
+
+.background-image {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+}
+
+.product-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+    padding: 20px;
+}
+
+.product-info {
+    display: flex;
+    gap: 30px;
+    max-width: 1300px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    z-index: 1; /* Контент поверх фона */
+    overflow: auto; /* Включаем прокрутку внутри блока */
+    max-height: 90vh; /* Чтобы контент не выходил за границы экрана */
+}
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.product-info img {
+    width: 600px;
+    height: 600px;
+    border-radius: 10px;
+}
+
+.product-details {
+    font-size: 18px;
+}
+
+.product-details h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 22px;
+    color: #ff007f;
+}
+
+.product-description {
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
+
+.fp{
+    color: #8644bd;
+    font-family: 'CyberFont', sans-serif;
+    position: absolute;
+    bottom: 400px;
+    left: 850px;
+    display: flex;
+    gap: 50px;
+    line-height: 1.8;
+}
+
+@keyframes neonGlow {
+    0% {
+        text-shadow: 0 0 5px #ff0000, 0 0 10px #aa00ff, 0 0 15px #37ff00;
+    }
+    50% {
+        text-shadow: 0 0 10px #0022ff, 0 0 20px #ffc300, 0 0 30px #e6129c;
+    }
+    100% {
+        text-shadow: 0 0 5px #87CEEB, 0 0 10px #87CEEB, 0 0 15px #87CEEB;
+    }
+}

@@ -1,5 +1,3 @@
-import time
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
@@ -14,7 +12,6 @@ from orders.tasks import add_to_queue
 
 @login_required
 def create_order(request):
-    print("ты зашёл в форму")
     if request.method == "POST":  # Если POST — значит он отправил форму. Если GET — значит просто зашёл на страницу
         form = CreateOrderForm(data=request.POST)  # создаём новую форму
         if form.is_valid():  # в основном не проходит потому что не все параметры получены, если надо узнать
@@ -64,7 +61,7 @@ def create_order(request):
                 return redirect('user:profile')
 
 
-            messages.success(request, f'Заказ будет ждать оформления')
+            messages.success(request, 'Заказ будет ждать оформления')
             return redirect('user:profile')
     else:
         initial = {

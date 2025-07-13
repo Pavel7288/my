@@ -19,7 +19,7 @@ def login(request):
             # Если форма содержит ошибки (например, пустое поле или неверный формат ввода), выполнение дальше не пойдёт.
             username = request.POST['username']  # Извлекаем введённые пользователем логин и пароль из request.POST.
             password = request.POST['password']  # Теперь username и password содержат введённые данные.
-            user = auth.authenticate(username=username,password=password)  # проверяет, существует ли пользователь с такими параметрами если не то user не создаётся
+            user = auth.authenticate(username=username,password=password)  # проверяет, существует ли пользователь с такими параметрами, если нет, то user не создаётся
 
             session_key = request.session.session_key
 

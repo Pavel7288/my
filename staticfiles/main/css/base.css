@@ -1,0 +1,153 @@
+.left {
+    font-family: 'CyberFont', sans-serif;
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    display: flex;
+    gap: 50px;
+    line-height: 1.8; /* Межстрочный интервал */
+    animation: neonGlow 1.5s infinite alternate; /* Запуск анимации */
+}
+
+@keyframes neonGlow {
+    0% {
+        text-shadow: 0 0 5px #ffe900, 0 0 10px #ffe900, 0 0 15px #ffe900;
+    }
+    50% {
+        text-shadow: 0 0 10px #950bac, 0 0 20px #950bac, 0 0 30px #950bac;
+    }
+    100% {
+        text-shadow: 0 0 5px #87CEEB, 0 0 10px #87CEEB, 0 0 15px #87CEEB;
+    }
+}
+
+.filter-btn {
+    display: block;
+    width: fit-content;
+    margin: 15px auto 0; /* Центрирование */
+    padding: 15px 40px;
+    border: none;
+    outline: none;
+    color: #32CD32;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    border-radius: 40px;
+    text-align: center;
+    background: linear-gradient(45deg, #FF0000, #FF7300, #FFFB00, #48FF00);
+    transition: transform 0.3s;
+    text-decoration: none
+}
+
+/* Эффекты кнопки */
+.filter-btn::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(30, 98, 223, 0.73);
+    top: 0;
+    left: 0;
+    border-radius: 45px;
+    z-index: -1;
+}
+
+.filter-btn::before {
+    content: "";
+    background: linear-gradient(
+            45deg,
+            #FF0000, #FF7300, #FFFB00, #48FF00,
+            #00FFD5, #002BFF, #FF00C8, #FF0000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 500%;
+    z-index: -1;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    filter: blur(4px);
+    animation: glowing 20s linear infinite;
+    transition: opacity .3s ease-in-out;
+    border-radius: 30px;
+    opacity: 0;
+}
+
+.filter-btn:hover {
+    transform: scale(1.1);
+}
+
+@keyframes glowing {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 400% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.filter-btn:hover::before {
+    opacity: 1;
+}
+
+.filter-btn:active::after {
+    background: transparent;
+}
+
+@font-face {
+    font-family: 'CyberFont';
+    src: url('/static/main/fonts/cyber.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.description {
+    font-family: 'CyberFont', sans-serif; /* Киберпанковый шрифт */
+    font-size: 20px; /* Размер текста */
+    font-weight: 700; /* Толщина шрифта */
+    color: #00ff00;
+    text-shadow: 0 0 5px #d400ff, 0 0 10px #a000ff, 0 0 15px #7000ff; /* Градиентное свечение */
+    letter-spacing: 2.3px; /* Расстояние между буквами */
+    line-height: 1.8; /* Межстрочный интервал */
+    /*animation: my 1.5s infinite alternate;*/
+
+}
+
+.alert-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(45deg, #0750ff, #149adf);
+    color: #0e0404;
+    padding: 15px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(255, 75, 43, 0.8);
+    animation: glow 1.5s infinite alternate;
+    transition: opacity 1s ease-out, transform 1s ease-out;
+    z-index: 10;
+}
+
+
+/* Свечение */
+@keyframes glow {
+    from {
+        box-shadow: 0 0 15px rgba(127, 31, 255, 0.8);
+    }
+    to {
+        box-shadow: 0 0 25px rgb(11, 221, 141);
+    }
+}
+
+/* Исчезновение */
+.hide-message {
+    opacity: 0;
+    transform: translate(-50%, -30px);
+}

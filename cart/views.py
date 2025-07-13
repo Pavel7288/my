@@ -66,7 +66,7 @@ def cart_remove(request):
     cart_items_html = render_to_string(
         'cart/cart_items.html', {'carts': user_cart}, request=request)
     response_data = {
-        'message': 'Товар добавлен в корзину',
+        'message': 'Товар удалён из корзины',
         'cart_items_html': cart_items_html,
     }
     return JsonResponse(response_data)

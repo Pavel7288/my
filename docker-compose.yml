@@ -2,10 +2,7 @@ services:
   db:
     image: postgres:16
     container_name: postgres
-    environment:
-      POSTGRES_DB: mydb
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
+    env_file: .env.docker
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -13,33 +10,44 @@ services:
     build: .    #это значит ищи один докерфайл в корне проекта и собирай его
     image: django:1.0  #image используется тут, чтобы назвать наш образ
     container_name: django
-    command: gunicorn app.wsgi:application --bind 0.0.0.0:8000
-    volumes:
+    volumes: # директории и так скопируются в контейнер, но если volumes не прокидывать то обновления кода при перезапуске
+      # не будет, потому что таким образом наш код связан с кодом внутри контейнера
       - ./app:/app/app
       - ./cart:/app/cart
       - ./fixtures:/app/fixtures
       - ./goods:/app/goods
       - ./main:/app/main
-      - ./media:/app/media
       - ./nginx:/app/nginx
       - ./orders:/app/orders
-      - ./staticfiles:/app/staticfiles
       - ./templates:/app/templates
       - ./users:/app/users
       - ./manage.py:/app/manage.py
       - ./requirements.txt:/app/requirements.txt
-      - static:/app/staticfiles     #Django нужен доступ к staticfiles, чтобы туда всё собрать (поэтому volume static:/app/staticfiles).
+      - static:/app/staticfiles   # оно сохраняет всё что в staticfiles, в папке внутри контейнера, и при перезапуске всё сохраняется
       - ./media:/app/media
+    env_file: .env.docker
     ports:
       - "8000:8000"
     depends_on:
-      - db             # Сначала запускается контейнер с базой данны
-    environment: #переменное окружение для базы данных
-      - DB_NAME=mydb
-      - DB_USER=myuser
-      - DB_PASSWORD=mypassword
-      - DB_HOST=db
-      - DB_PORT=5432
+      - db
+
+  celery:
+    image: django:1.0  #берём сразу образ основного приложения, чтобы не билдить снова
+    container_name: celery
+    command: celery -A app worker --loglevel=info
+    volumes: # директории и так скопируются в контейнер, но если volumes не прокидывать то обновления кода при перезапуске
+      # не будет, потому что таким образом наш код связан с кодом внутри контейнера
+      - ./app:/app/app
+      - ./cart:/app/cart
+      - ./goods:/app/goods
+      - ./main:/app/main
+      - ./orders:/app/orders
+      - ./users:/app/users
+      - ./manage.py:/app/manage.py
+    env_file: .env.docker
+    depends_on:
+      - web
+      - redis
 
 
   nginx:
@@ -48,10 +56,10 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx/default:/etc/nginx/conf.d/default.conf   # это настройки nginx
+      - ./nginx/default:/etc/nginx/conf.d/default.conf   # это настройки nginx, если их не прокинуть, то будет апокалипсис
       - static:/app/staticfiles   # тут оно само видит статику и перемещает всю её в контейнер. nginx нужен доступ к staticfiles, чтобы оттуда всё раздавать (тот же volume в nginx).
-      - ./media:/app/media        # тут оно отвечает из какой папки куда ты кладёшь всё из моей в контейнера,(загружаемые пользователем файлы)
-    depends_on: # если есть с начала ./, то надо прокидывать в volumes в конце
+      - ./media:/app/media        # тут оно отвечает, из какой папки куда ты кладёшь всё из моей в контейнера,(загружаемые пользователем файлы)
+    depends_on: # если есть с начала ./, то не надо прокидывать в volumes в конце
       - web
 
 
@@ -59,43 +67,12 @@ services:
     image: redis:7
     container_name: redis
     ports:
-      - "6379:6379"
+      - "6380:6379"  # первый порт это на мой комп прокидывается, чтобы локальный редис не пересекался
     volumes:
       - redis_data:/data
     depends_on:
       - web
 
-
-  celery:
-    build: .
-    image: celery:1
-    container_name: celery
-    command: celery -A app worker --loglevel=info
-    volumes:
-      - ./app:/app/app
-      - ./cart:/app/cart
-      - ./fixtures:/app/fixtures
-      - ./goods:/app/goods
-      - ./main:/app/main
-      - ./media:/app/media
-      - ./nginx:/app/nginx
-      - ./orders:/app/orders
-      - ./staticfiles:/app/staticfiles
-      - ./templates:/app/templates
-      - ./users:/app/users
-      - ./manage.py:/app/manage.py
-      - ./requirements.txt:/app/requirements.txt
-      - static:/app/staticfiles
-      - ./media:/app/media
-    environment: # бд тут нужна, чтобы сохранять результаты в неё, а у меня именно так и делается
-      - DB_NAME=mydb
-      - DB_USER=myuser
-      - DB_PASSWORD=mypassword
-      - DB_HOST=db
-      - DB_PORT=5432
-    depends_on:
-      - web
-      - redis
 
   flower:
     image: mher/flower:0.9.7
