@@ -1,15 +1,16 @@
-from django import forms
+# from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
-from django.forms import CharField
+# from django.forms import CharField
 
 from users.models import User
 
 
 class UserLoginForm(AuthenticationForm):
+    pass
     # username = forms.CharField()
     # password = forms.CharField()
-    class Meta:
-        model = User
+    # class Meta:
+    #     model = User
         # fields = ('username', 'password') хз зачем это, и без него работает
 
 
@@ -52,6 +53,3 @@ class ProfileForm(UserChangeForm):
             'number',
             'username',
             "email")
-        number = CharField()
-        username = CharField()
-        email = CharField()

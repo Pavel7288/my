@@ -1,0 +1,326 @@
+/* Основной стиль страницы каталога */
+body {
+    background-color: #161616;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+/* Заголовок */
+header h1 {
+    text-align: center;
+    font-size: 2.7rem;
+    margin-top: 50px;
+    color: #00fff7; /* Неоновый цвет для текста */
+}
+
+/* Основная секция каталога */
+.catalog {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
+    gap: 70px;
+    padding: 30px;
+    margin-top: 20px;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+
+/* Карточка товара */
+.product-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid #00fff7;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.product-card h2 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.product-card .price {
+    font-size: 1.5rem;
+    color: #ff007f;
+}
+
+.product-card:hover {
+    transform: scale(1.05); /* Увеличение карточки при наведении */
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.7); /* Свечение */
+}
+
+.view-details-btn {
+    background: linear-gradient(45deg, #FF0000, #FF7300, #FFFB00, #48FF00);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 40px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.view-details-btn:hover {
+    transform: scale(1.1);
+    background-color: #ff0080;
+}
+
+/* Анимации */
+@keyframes glowing {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 400% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.background-image {
+    position: fixed; /* Фон остаётся на месте при скролле */
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Отправляем фон на задний план */
+}
+
+.category-filter {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.category-dropdown {
+    background-color: rgba(0, 0, 0, 0.8); /* Тёмный фон */
+    color: #0ff; /* Неоновый цвет текста */
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none; /* Убираем обводку */
+    border-radius: 5px; /* Закругляем углы */
+}
+
+.category-dropdown:hover {
+    background-color: rgba(0, 0, 0, 1); /* Более тёмный фон при наведении */
+    color: #fff; /* Белый текст */
+}
+
+
+@keyframes descrip {
+    0% {
+        text-shadow: 0 0 5px #d400ff, 0 0 10px #d400ff, 0 0 15px #d400ff;
+    }
+    /*мерцание*/
+    50% {
+        text-shadow: 0 0 10px #a000ff, 0 0 20px #a000ff, 0 0 30px #a000ff;
+    }
+    100% {
+        text-shadow: 0 0 5px #7000ff, 0 0 10px #7000ff, 0 0 15px #7000ff;
+    }
+}
+
+@font-face {
+    font-family: 'CyberFont';
+    src: url('/static/main/fonts/cyber.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.description {
+    font-family: 'CyberFont', sans-serif; /* Киберпанковый шрифт */
+    font-size: 20px; /* Размер текста */
+    font-weight: 700; /* Толщина шрифта */
+    color: #00ff00;
+    text-shadow: 0 0 5px #d400ff, 0 0 10px #a000ff, 0 0 15px #7000ff; /* Градиентное свечение */
+    letter-spacing: 2px; /* Расстояние между буквами */
+    line-height: 1.8; /* Межстрочный интервал */
+    animation: descrip 1.5s infinite alternate;
+}
+
+.lo {
+    font-family: 'CyberFont', sans-serif; /* Киберпанковый шрифт */
+    color: #000000; /* Чёрный основной цвет */
+    text-shadow: 0 0 5px #00BFFF, 0 0 10px #00BFFF, 0 0 15px #00BFFF; /* Чёрное свечение */
+    letter-spacing: 2px; /* Расстояние между буквами */
+    line-height: 1.8; /* Межстрочный интервал */
+}
+
+
+.pagination {
+    text-align: center;
+    margin-top: 30px;
+}
+
+
+/* Анимация для градиентного фона */
+@keyframes neon-gradient {
+    0% {
+        background-position: 0 50%;
+    }
+    /* Начальная позиция градиента */
+    50% {
+        background-position: 100% 50%;
+    }
+    /* В середине - смещение градиента вправо */
+    100% {
+        background-position: 0 50%;
+    }
+    /* Возвращение в исходное положение */
+}
+
+/* Основной стиль кнопки */
+.page-btn {
+    display: inline-block; /* Делаем кнопку блочным элементом, но с возможностью быть в строке */
+    padding: 12px 25px; /* Внутренние отступы (вертикальный, горизонтальный) */
+    margin: 0 8px; /* Отступы между кнопками */
+    color: #fff; /* Белый цвет текста */
+    font-size: 16px; /* Размер шрифта */
+    font-weight: bold; /* Делаем текст жирным */
+    text-transform: uppercase; /* Делаем все буквы заглавными */
+    text-decoration: none; /* Убираем подчеркивание у ссылок */
+    border-radius: 8px; /* Скругляем углы кнопки */
+
+    /* Создаем неоновую границу */
+    border: 2px solid rgba(255, 0, 255, 0.6); /* Полупрозрачная фиолетовая рамка */
+
+    /* Фон с градиентом */
+    background: linear-gradient(100deg, #FF1493, #FF1493, #700080, #700080, #4B0082, #4B0082, #8B0000, #8B0000, #000000, #000000, #9400D3, #9400D3);
+    background-size: 300% 300%; /* Увеличиваем размер градиента, чтобы он плавно переливался */
+
+    /* Применяем анимацию градиента */
+    animation: neon-gradient 7s ease infinite;
+
+    /* Эффект свечения кнопки */
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5), /* Мягкое свечение */ 0 0 20px rgba(255, 0, 255, 0.3); /* Дальнее свечение */
+
+    /* Плавные переходы при изменении свойств */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Эффект при наведении */
+.page-btn:hover {
+    transform: scale(1.1); /* Увеличиваем кнопку на 10% */
+
+    /* Усиливаем свечение */
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.8),
+    0 0 25px rgba(255, 0, 255, 0.6);
+}
+
+.page-btn.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.current-page {
+    display: inline-block; /* Чтобы не занимала всю ширину */
+    padding: 10px;
+    font-weight: bold;
+    color: #ff007f; /* Яркий розово-красный */
+    background: transparent; /* Убираем тёмный фон */
+    border: 2px solid #ff007f; /* Добавляем аккуратную границу */
+    border-radius: 5px; /* Закругляем углы */
+    font-size: 18px; /* Делаем текст чуть больше */
+}
+
+
+/* Контейнер строки поиска */
+.search-container {
+    display: flex; /* Размещаем элементы в строку */
+    position: absolute;
+    margin-bottom: 20px; /* Отступ снизу */
+    right: 550px;
+    top: 155px;
+}
+
+/* Поле ввода */
+.search-box {
+    width: 300px; /* Ширина */
+    padding: 10px; /* Внутренний отступ */
+    font-size: 18px; /* Размер шрифта */
+    border: 2px solid rgba(0, 255, 255, 0.6); /* Неоновая граница */
+    border-radius: 5px; /* Скругление углов */
+    background-color: rgba(0, 0, 0, 0.8); /* Тёмный фон */
+    color: #0ff; /* Неоновый цвет текста */
+    outline: none; /* Убираем стандартный контур */
+    transition: 0.3s; /* Плавные изменения */
+}
+
+/* Эффект при фокусе */
+.search-box:focus {
+    border-color: #ff007f; /* Изменение цвета границы */
+    box-shadow: 0 0 10px #ff007f; /* Свечение */
+}
+
+/* Кнопка поиска */
+.search-btn {
+    padding: 10px 15px; /* Размеры кнопки */
+    margin-left: 10px; /* Отступ слева */
+    font-size: 18px;
+    border: none;
+    background: linear-gradient(100deg, #FF1493, #4B0082, #9400D3); /* Неоновый градиент */
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    transition: 0.3s;
+}
+
+/* Эффект при наведении */
+.search-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+}
+
+.nothing-find {
+    font-family: 'CyberFont', sans-serif; /* Киберпанковый шрифт */
+    position: absolute;
+    font-size: 70px;
+    top: 40%;
+    right: 31%;
+    color: #c6a318; /* Чёрный основной цвет */
+
+    letter-spacing: 2px; /* Расстояние между буквами */
+    line-height: 1.8; /* Межстрочный интервал */
+    animation: nothing 3s infinite alternate;
+}
+
+@keyframes nothing {
+    0% {
+        text-shadow: 0 0 5px #00d0ff, 0 0 10px #00d0ff, 0 0 15px #00d0ff;
+    }
+    /*мерцание*/
+    50% {
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
+    }
+    100% {
+        text-shadow: 0 0 5px #7000ff, 0 0 10px #7000ff, 0 0 15px #7000ff;
+    }
+}
+
+
+@keyframes neonGlow {   /* это переопределение свечения из base html*/
+    0% {
+        text-shadow: 0 0 5px #5eff00, 0 0 10px #5eff00, 0 0 15px #5eff00;
+    }
+    50% {
+        text-shadow: 0 0 10px #e6129c, 0 0 20px #e6129c, 0 0 30px #e6129c;
+    }
+    100% {
+        text-shadow: 0 0 5px #020202, 0 0 10px #020202, 0 0 15px #020202;
+    }
+}
